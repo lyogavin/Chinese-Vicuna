@@ -31,11 +31,18 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
 ### Response:{truncated_title}
 """
 
-    input_ids = tokenizer.encode(instruction_prompt_first, instruction_prompt_second,
-                                      truncation='only_first',
-                                      max_length=max_seq_length)
+    second_input_ids = tokenizer.encode(instruction_prompt_second,
+                                      truncation=False,
+                                      max_length=max_seq_length,
+                                      add_special_tokens=False)
 
-    truncated_title_input_ids = tokenizer.encode(truncated_title)
+    first_input_ids = tokenizer.encode(instruction_prompt_first,
+                                      truncation=True,
+                                      max_length=max_seq_length - len(second_input_ids))
+
+    input_ids = first_input_ids + second_input_ids
+
+    truncated_title_input_ids = tokenizer.encode(truncated_title, add_special_tokens=False)
 
     target_len = len(truncated_title_input_ids)
 
@@ -76,7 +83,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     tokenizer = LlamaTokenizer.from_pretrained(
-            "decapoda-research/llama-7b-hf", add_eos_token=True
+            "decapoda-research/llama-7b-hf"#, add_eos_token=True
         )
 
     df = pd.read_csv(data_file)

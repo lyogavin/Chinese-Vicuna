@@ -103,7 +103,7 @@ model = LlamaForCausalLM.from_pretrained(
         'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
 )
 tokenizer = LlamaTokenizer.from_pretrained(
-    args.model_path, add_eos_token=True
+    args.model_path#, add_eos_token=True
 )
 
 model = prepare_model_for_int8_training(model)
@@ -195,6 +195,7 @@ trainer = transformers.Trainer(
     model=model,
     train_dataset=train_data,
     eval_dataset=val_data,
+    data_collator=transformers.DataCollatorWithPadding(),
     args=transformers.TrainingArguments(
         per_device_train_batch_size=MICRO_BATCH_SIZE,
         gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,

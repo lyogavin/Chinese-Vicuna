@@ -30,7 +30,7 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
 ### Response:{truncated_title}
 """
 
-    input_ids = tokenizer.encode((instruction_prompt_first, instruction_prompt_second),
+    input_ids = tokenizer.encode(instruction_prompt_first, instruction_prompt_second,
                                       truncation='only_first',
                                       max_length=max_seq_length)
 

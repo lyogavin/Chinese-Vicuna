@@ -116,7 +116,7 @@ if __name__ == '__main__':
             print(f"decoded encode: {deres}")
 
 
-    for title_len in range(80, 150):
+    for title_len in range(30, 150):
         title = ['数'] * title_len
         title = ''.join(title)
         print(f"title len:{title_len}")

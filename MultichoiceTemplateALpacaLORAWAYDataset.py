@@ -1,6 +1,6 @@
 # coding=utf8
 import os
-import pytorch_lightning as pl
+#import pytorch_lightning as pl
 #from torch.utils.data import DataLoader, Dataset
 from datasets import load_dataset
 from tqdm import tqdm

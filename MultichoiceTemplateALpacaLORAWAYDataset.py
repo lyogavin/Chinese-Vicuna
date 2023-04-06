@@ -87,6 +87,10 @@ if __name__ == '__main__':
 
     for i, batch in enumerate(train_data):
         print(f"{i}: {batch}")
+        decoded = tokenizer.decode(batch['input_ids'])
+        decoded_labels = tokenizer.decode(batch['labels'])
+        print(f"decoded: {decoded}")
+        print(f"decoded label: {decoded_labels}")
 
     #print(testml[10])
     #print(testml.tokenizer.decode(testml[10]['input_ids']))

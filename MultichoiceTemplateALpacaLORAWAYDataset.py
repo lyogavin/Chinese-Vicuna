@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
 
 
-        for i in range(100, 40, -1):
+        for i in range(300, 40, -1):
             print(f"\nfor max len: {i}")
 
             res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=i)({"data_type":"redbook_content_title",

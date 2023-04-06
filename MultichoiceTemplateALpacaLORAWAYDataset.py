@@ -47,9 +47,9 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
     # prompt_inputs_dict = self.tokenizer.encode_plus(item['prompt'],
     #                                         max_length=self.max_seq_length, padding=False,
     #                                         truncation=True, return_tensors='pt')
-    target = input_ids
-    labels = target.clone().detach()
-    labels[target == tokenizer.pad_token_id] = -100
+    #target = input_ids
+    #labels = target.clone().detach()
+    #labels[target == tokenizer.pad_token_id] = -100
     return {
         "input_ids": input_ids.squeeze(),
         "attention_mask": [1] * len(input_ids.squeeze()),  # attention_mask.squeeze(),

@@ -3,6 +3,7 @@ import os
 #import pytorch_lightning as pl
 #from torch.utils.data import DataLoader, Dataset
 from datasets import load_dataset
+from datasets import Dataset
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 import pandas as pd
@@ -77,7 +78,9 @@ if __name__ == '__main__':
             "decapoda-research/llama-7b-hf", add_eos_token=True
         )
 
-    data = load_dataset("csv", data_files=data_file).train_test_split(
+    df = pd.read_csv(data_file)
+
+    data = Dataset.from_pandas(df).train_test_split(
             test_size=100, shuffle=True, seed=42
         )
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
@@ -126,7 +129,7 @@ if __name__ == '__main__':
 
     print(f"test iterate through all train data...")
 
-    dataset = load_dataset("csv", data_files=data_file).shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
+    dataset = Dataset.from_pandas(df).shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
 
 
 

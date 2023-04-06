@@ -127,7 +127,9 @@ df = pd.read_csv(DATA_PATH)
 data = Dataset.from_pandas(df)
 
 
-now_max_steps = max((len(data["train"]) - VAL_SET_SIZE) // BATCH_SIZE * EPOCHS, EPOCHS)
+now_max_steps = max((len(data) - VAL_SET_SIZE) // BATCH_SIZE * EPOCHS, EPOCHS)
+
+
 if args.resume_from_checkpoint:
 # Check the available weights and load them
     checkpoint_name = os.path.join(

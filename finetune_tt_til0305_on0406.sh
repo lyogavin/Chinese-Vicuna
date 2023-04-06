@@ -36,5 +36,6 @@ CUDA_VISIBLE_DEVICES=${TOT_CUDA} torchrun --nproc_per_node=$CUDA_NUM --master_po
 --resume_from_checkpoint $lora_checkpoint \
 --run_ts $run_ts \
 --max_seq_len 700 \
---wandb
+--wandb \
+--use_test
 

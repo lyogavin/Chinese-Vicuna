@@ -129,6 +129,7 @@ data = Dataset.from_pandas(df)
 
 now_max_steps = max((len(data) - VAL_SET_SIZE) // BATCH_SIZE * EPOCHS, EPOCHS)
 
+MAX_STEPS = now_max_steps
 
 if args.resume_from_checkpoint:
 # Check the available weights and load them

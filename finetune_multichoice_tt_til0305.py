@@ -216,7 +216,7 @@ trainer = transformers.Trainer(
         report_to="wandb" if args.wandb else [],
         ignore_data_skip=args.ignore_data_skip,
     ),
-    data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False)
+    data_collator=transformers.DataCollatorWithPadding(tokenizer), #DataCollatorForLanguageModeling(tokenizer, mlm=False)
 )
 model.config.use_cache = False
 

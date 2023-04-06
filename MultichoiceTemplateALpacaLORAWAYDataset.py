@@ -62,7 +62,10 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
 if __name__ == '__main__':
     import argparse
     #modelfile = '/cognitive_comp/wuziwei/pretrained_model_hf/medical_v2'
-    datafile = '/home/ubuntu/cloudfs/ghost_data/merge_all_add_1208_1228//merge_all_0108_with_multichoice_scores_and_templates_val_sample_1673194850.csv.tgz'
+    #datafile = '/home/ubuntu/cloudfs/ghost_data/merge_all_add_1208_1228//merge_all_0108_with_multichoice_scores_and_templates_val_sample_1673194850.csv.tgz'
+    data_file='/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305_download/' \
+              'merge_all_till0305_with_multichoice_scores_and_templates_val_sample_1679690410.csv.tgz'
+
     parser = argparse.ArgumentParser(description='hf test', allow_abbrev=False)
     group = parser.add_argument_group(title='test args')
     group.add_argument('--pretrained-model-path', type=str, default="/home/ubuntu/cloudfs/saved_models/bigscience/bloomz-3b",
@@ -122,9 +125,8 @@ if __name__ == '__main__':
     from tqdm import tqdm
 
     print(f"test iterate through all train data...")
-    data_path = "/home/ubuntu/cloudfs/ghost_data/merge_all_add_1208_1228//merge_all_0108_with_multichoice_scores_and_templates_train_1673194850.csv.tgz"
 
-    dataset = load_dataset("csv", data_files=data_path).shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
+    dataset = load_dataset("csv", data_files=data_file).shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
 
 
 

@@ -98,6 +98,9 @@ model = LlamaForCausalLM.from_pretrained(
     args.model_path,
     load_in_8bit=True,
     device_map=device_map,
+    proxies={
+        'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',
+        'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
 )
 tokenizer = LlamaTokenizer.from_pretrained(
     args.model_path, add_eos_token=True

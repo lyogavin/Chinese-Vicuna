@@ -59,9 +59,9 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
     #labels = target.clone().detach()
     #labels[target == tokenizer.pad_token_id] = -100
     return {
-        "input_ids": input_ids,
-        "attention_mask": [1] * len(input_ids),  # attention_mask.squeeze(),
-        "labels": [-100] * (len(input_ids) - target_len) + truncated_title_input_ids,
+        "input_ids": torch.tensor(input_ids),
+        "attention_mask": torch.tensor([1] * len(input_ids)),  # attention_mask.squeeze(),
+        "labels": torch.tensor([-100] * (len(input_ids) - target_len) + truncated_title_input_ids),
         # labels.squeeze(),
         # "labels_mask": torch.tensor([[0] * len(prefix_input_ids) + [1] * len(postfix_input_ids)])
         # "answer_end_pos":len(answer_input_ids) + len(postfix_input_ids) + len(prefix_input_ids) - 1

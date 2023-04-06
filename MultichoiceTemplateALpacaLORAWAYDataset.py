@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
 
 
-        for i in range(300, 40, -1):
+        for i in range(200, 40, -1):
             print(f"\nfor max len: {i}")
 
             res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=i)({"data_type":"redbook_content_title",
@@ -126,7 +126,7 @@ if __name__ == '__main__':
                                  "title_template_name":'权威/内部人士/过来人身份推荐背书',
                              'content':'将数据转换成模型训练的输入将数据转换成模型训练的输入将数据转换成模型训练的输入', 'title':title})
 
-        print(f"encode len: {res['input_ids'].shape}")
+        print(f"encode len: {np.array(res['input_ids']).shape}")
         deres = tokenizer.decode(res['input_ids'])
         print(f"decoded encode: {deres}")
 

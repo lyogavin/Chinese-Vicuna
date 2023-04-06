@@ -7,6 +7,7 @@ from datasets import Dataset
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 import pandas as pd
+import numpy as np
 import torch
 from functools import partial
 
@@ -110,7 +111,7 @@ if __name__ == '__main__':
                                  "title_template_name":'制造悬念感',
                                  "source_category":testing_type, 'content':'将数据转换成模型训练的输入将数据转换成模型训练的输入将数据转换成模型训练的输入', 'title':'将数据转换成模型训练的输入'})
 
-            print(f"encode len: {res['input_ids'].shape}")
+            print(f"encode len: {np.array(res['input_ids']).shape}")
             deres = tokenizer.decode(res['input_ids'])
             print(f"decoded encode: {deres}")
 

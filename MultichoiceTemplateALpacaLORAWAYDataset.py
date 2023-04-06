@@ -77,7 +77,7 @@ if __name__ == '__main__':
             "decapoda-research/llama-7b-hf", add_eos_token=True
         )
 
-    data = load_dataset("csv", data_files=datafile).train_test_split(
+    data = load_dataset("csv", data_files=data_file).train_test_split(
             test_size=100, shuffle=True, seed=42
         )
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))

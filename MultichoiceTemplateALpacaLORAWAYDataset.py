@@ -81,14 +81,14 @@ if __name__ == '__main__':
     df = pd.read_csv(data_file)
 
     data = Dataset.from_pandas(df).train_test_split(
-            test_size=100, shuffle=True, seed=42
+            test_size=800, shuffle=True, seed=42
         )
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
 
     for i, batch in enumerate(train_data):
         print(f"{i}: {batch}")
         decoded = tokenizer.decode(batch['input_ids'], skip_special_tokens=True)
-        decoded_labels = tokenizer.decode(batch['labels'], skip_special_tokens=True)
+        decoded_labels = tokenizer.decode([x if x!=-100 else 0 for x in batch['labels']], skip_special_tokens=True)
         print(f"decoded: {decoded}")
         print(f"decoded label: {decoded_labels}")
 

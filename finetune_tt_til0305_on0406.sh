@@ -11,7 +11,7 @@ echo "START TIME: $(date)"
 ROOT_DIR_BASE=/home/ubuntu/cloudfs/saved_models/cn_alpaca_lora
 OUTPUT_PATH=$ROOT_DIR_BASE/output_$run_ts
 
-
+mkdir -p $OUTPUT_PATH
 
 TOT_CUDA="0"
 CUDAs=(${TOT_CUDA//,/ })

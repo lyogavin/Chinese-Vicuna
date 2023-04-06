@@ -100,7 +100,7 @@ if __name__ == '__main__':
     #print(len(testml))
     #print(f"max len:{testml.max_seq_length}")
 
-    for testing_type in ["newrank_healthcare", "zhihu_search", "baidubaijia"]:
+    for testing_type in ["newrank_healthcare"]:#, "zhihu_search", "baidubaijia"]:
 
 
 

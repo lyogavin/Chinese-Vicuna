@@ -93,6 +93,8 @@ if __name__ == '__main__':
         print(f"decoded: {decoded}")
         print(f"decoded label: {decoded_labels}")
 
+        assert len(batch['input_ids']) == len(batch['labels'])
+
     #print(testml[10])
     #print(testml.tokenizer.decode(testml[10]['input_ids']))
     #print(testml.tokenizer.decode(testml[23]['input_ids']))

@@ -81,9 +81,9 @@ if __name__ == '__main__':
     df = pd.read_csv(data_file)
 
     data = Dataset.from_pandas(df).train_test_split(
-            test_size=800, shuffle=True, seed=42
+            test_size=100, shuffle=True, seed=42
         )
-    train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
+    train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000))
 
     for i, batch in enumerate(train_data):
         print(f"{i}: {batch}")

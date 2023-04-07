@@ -117,6 +117,9 @@ if __name__ == '__main__':
         )
     print(padded)
 
+    for k,v in padded.items():
+        print(f"for {k}: {np.array(v).shape}")
+
 
     #print(testml[10])
     #print(testml.tokenizer.decode(testml[10]['input_ids']))

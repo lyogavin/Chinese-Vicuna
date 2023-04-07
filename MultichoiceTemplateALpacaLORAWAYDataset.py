@@ -94,7 +94,7 @@ if __name__ == '__main__':
     data = Dataset.from_pandas(df).train_test_split(
             test_size=100, shuffle=True, seed=42
         )
-    cols = data.column_names
+    cols = data['train'].column_names
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000), remove_columns = cols)
 
 

@@ -88,6 +88,7 @@ if __name__ == '__main__':
     tokenizer = LlamaTokenizer.from_pretrained(
             "decapoda-research/llama-7b-hf"#, add_eos_token=True
         )
+    tokenizer.pad_token_id = 0
 
     df = pd.read_csv(data_file)
 

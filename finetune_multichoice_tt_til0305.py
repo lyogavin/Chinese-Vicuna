@@ -33,6 +33,8 @@ parser.add_argument("--use_test", action="store_true", default=False)
 parser.add_argument("--data_path", type=str, default="merge.json")
 parser.add_argument("--output_path", type=str, default="lora-Vicuna")
 parser.add_argument("--model_path", type=str, default="decapoda-research/llama-7b-hf")
+parser.add_argument("--tokenizer_path", type=str, default="decapoda-research/llama-7b-hf")
+
 parser.add_argument("--eval_steps", type=int, default=200)
 parser.add_argument("--save_steps", type=int, default=200)
 parser.add_argument("--run_ts", type=int)
@@ -109,7 +111,7 @@ model = LlamaForCausalLM.from_pretrained(
         'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
 )
 tokenizer = LlamaTokenizer.from_pretrained(
-    args.model_path#, add_eos_token=True
+    args.tokenizer_path#, add_eos_token=True
 )
 
 model = prepare_model_for_int8_training(model)

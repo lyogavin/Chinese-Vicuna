@@ -21,7 +21,7 @@ DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305
 
 # use local model
 MODEL_PATH="/home/ubuntu/cloudfs/saved_models/decapoda-research/llama-13b-hf"
-
+TOKENIZER_PATH="decapoda-research/llama-13b-hf"
 # using checkpoint-final will cuase issue
 #lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-final"
 #lora_checkpoint="Chinese-Vicuna/Chinese-Vicuna-lora-13b-belle-and-guanaco"
@@ -35,6 +35,7 @@ CUDA_VISIBLE_DEVICES="0" python finetune_multichoice_tt_til0305.py \
 --data_path $DATA_PATH \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \
+--tokenizer_path $TOKENIZER_PATH \
 --eval_steps 200 \
 --save_steps 200 \
 --test_size $TEST_SIZE \

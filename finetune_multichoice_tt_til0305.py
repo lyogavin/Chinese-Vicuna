@@ -243,7 +243,7 @@ trainer = transformers.Trainer(
         report_to="wandb" if args.wandb else [],
         ignore_data_skip=args.ignore_data_skip,
     ),
-    data_collator=transformers.DataCollatorForSeq2Seq(tokenizer, label_pad_token_id=0)
+    data_collator=transformers.DataCollatorForSeq2Seq(tokenizer, label_pad_token_id=0, pad_to_multiple_of=8, return_tensors="pt")
 )
 model.config.use_cache = False
 

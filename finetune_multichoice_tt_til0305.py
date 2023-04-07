@@ -12,7 +12,7 @@ import argparse
 import warnings
 from functools import partial
 
-from MultichoiceTemplateALpacaLORAWAYDataset import generate_and_tokenize_prompt
+from MultichoiceTemplateALpacaLORAWAYDataset import generate_and_tokenize_prompt, df_cols_to_use
 
 assert (
     "LlamaTokenizer" in transformers._import_structure["models.llama"]
@@ -155,7 +155,9 @@ if USE_TEST:
 
 logger.info(f"loadded df from: {DATA_PATH}, len:{len(df)}")
 
-data = Dataset.from_pandas(df)
+
+
+data = Dataset.from_pandas(df[[df_cols_to_use]])
 
 
 

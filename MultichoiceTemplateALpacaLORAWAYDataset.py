@@ -11,6 +11,10 @@ import numpy as np
 import torch
 from functools import partial
 
+
+df_cols_to_use = ['title_template_name', 'title', 'content']
+
+
 def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100):
     def get_promote_title_type(row):
         return row['title_template_name']

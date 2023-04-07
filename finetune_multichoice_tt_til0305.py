@@ -126,7 +126,7 @@ config = LoraConfig(
 
 model = get_peft_model(model, config)
 
-
+logger.info(f"model from: get_peft_model: {model}")
 
 LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN = False
 # https://github.com/tloen/alpaca-lora/issues/253
@@ -144,7 +144,7 @@ if LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN:
     args.resume_from_checkpoint = None
 
 
-logger.info(f"loaded checkpoint, setting to NONE: {args.resume_from_checkpoint}")
+    logger.info(f"loaded checkpoint, setting to NONE: {args.resume_from_checkpoint}")
 
 tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos token
 #tokenizer.padding_side = "left"  # Allow batched inference
@@ -204,6 +204,7 @@ if args.resume_from_checkpoint:
         logger.info(f"Restarting from {checkpoint_name}")
         adapters_weights = torch.load(checkpoint_name)
         model = set_peft_model_state_dict(model, adapters_weights)
+        logger.info(f"set_peft_model_state_dict: model:{model}")
     else:
         logger.info(f"Checkpoint {checkpoint_name} not found")
     

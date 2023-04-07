@@ -126,7 +126,6 @@ config = LoraConfig(
 
 model = get_peft_model(model, config)
 
-logger.info(f"model from: get_peft_model: {model}")
 
 LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN = False
 # https://github.com/tloen/alpaca-lora/issues/253
@@ -153,6 +152,7 @@ tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos tok
 
 df = pd.read_csv(DATA_PATH)
 
+logger.info(f"model from: get_peft_model: {model}")
 
 if USE_TEST:
     logger.info(f"USE_TEST, sampled 100")
@@ -203,6 +203,8 @@ if args.resume_from_checkpoint:
     if os.path.exists(checkpoint_name):
         logger.info(f"Restarting from {checkpoint_name}")
         adapters_weights = torch.load(checkpoint_name)
+        logger.info(f"before set_peft_model_state_dict: model:{model}")
+        logger.info(f"weights to load: {adapters_weights}")
         model = set_peft_model_state_dict(model, adapters_weights)
         logger.info(f"set_peft_model_state_dict: model:{model}")
     else:

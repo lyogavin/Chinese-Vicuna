@@ -143,9 +143,15 @@ tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos tok
 
 df = pd.read_csv(DATA_PATH)
 
+
+if USE_TEST:
+    logger.info(f"USE_TEST, sampled 100")
+    df = df.sample(100)
+
 logger.info(f"loadded df from: {DATA_PATH}, len:{len(df)}")
 
 data = Dataset.from_pandas(df)
+
 
 
 val_size_items = VAL_SET_SIZE

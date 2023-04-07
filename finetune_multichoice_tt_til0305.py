@@ -85,7 +85,7 @@ VAL_SET_SIZE = args.test_size #2000
 if VAL_SET_SIZE > 1.:
     VAL_SET_SIZE = int(VAL_SET_SIZE)
 
-    
+
 TARGET_MODULES = [
     "q_proj",
     "v_proj",

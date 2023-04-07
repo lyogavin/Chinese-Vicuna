@@ -18,7 +18,7 @@ CUDAs=(${TOT_CUDA//,/ })
 CUDA_NUM=${#CUDAs[@]}
 PORT="12345"
 
-DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305_download/merge_all_till0305_with_multichoice_scores_and_templates_val_sample_1679690410.csv.tgz" #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
+DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305_download/merge_all_till0305_with_multichoice_scores_and_templates_1679690410.csv.tgz" #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
 
 MODEL_PATH="decapoda-research/llama-7b-hf"
 

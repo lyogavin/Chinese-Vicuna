@@ -36,7 +36,7 @@ parser.add_argument("--model_path", type=str, default="decapoda-research/llama-7
 parser.add_argument("--eval_steps", type=int, default=200)
 parser.add_argument("--save_steps", type=int, default=200)
 parser.add_argument("--run_ts", type=int)
-parser.add_argument("--test_size", default=0.05)
+parser.add_argument("--test_size", type=float, default=0.05)
 parser.add_argument("--resume_from_checkpoint", type=str, default=None)
 parser.add_argument("--ignore_data_skip", type=str, default="False")
 parser.add_argument("--max_seq_len", type=int, default=700)
@@ -81,6 +81,11 @@ LORA_R = 8
 LORA_ALPHA = 16
 LORA_DROPOUT = 0.05
 VAL_SET_SIZE = args.test_size #2000
+
+if VAL_SET_SIZE > 1.:
+    VAL_SET_SIZE = int(VAL_SET_SIZE)
+
+    
 TARGET_MODULES = [
     "q_proj",
     "v_proj",
@@ -155,6 +160,8 @@ data = Dataset.from_pandas(df)
 
 
 val_size_items = VAL_SET_SIZE
+
+
 if isinstance(VAL_SET_SIZE, float):
     logger.info(f"converting float val size: {VAL_SET_SIZE}")
 
@@ -213,15 +220,8 @@ else:
 model.print_trainable_parameters()
 
 cols = data.column_names
-if USE_TEST:
-    train_val = data.train_test_split(
-        test_size=500, shuffle=True, seed=42
-    )
-    train_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
-                                                 remove_columns = cols)
-    val_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
-                                                 remove_columns = cols)
-elif VAL_SET_SIZE > 0:
+
+if VAL_SET_SIZE > 0:
     train_val = data.train_test_split(
         test_size=VAL_SET_SIZE, shuffle=True, seed=42
     )

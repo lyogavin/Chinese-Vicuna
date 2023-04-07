@@ -157,7 +157,7 @@ logger.info(f"loadded df from: {DATA_PATH}, len:{len(df)}")
 
 
 
-data = Dataset.from_pandas(df[[df_cols_to_use]])
+data = Dataset.from_pandas(df[df_cols_to_use])
 
 
 

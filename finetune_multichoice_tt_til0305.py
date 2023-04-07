@@ -210,6 +210,7 @@ if args.resume_from_checkpoint:
     train_args_path = os.path.join(args.resume_from_checkpoint, "trainer_state.json")
     
     if os.path.exists(train_args_path):
+        logger.info(f"loading: {train_args_path}")
         import json
         base_train_args = json.load(open(train_args_path, 'r'))
         base_max_steps = base_train_args["max_steps"]
@@ -223,7 +224,9 @@ if args.resume_from_checkpoint:
 else:
     MAX_STEPS = now_max_steps
 
-#model.print_trainable_parameters()
+logger.info(f"loaded weight from {checkpoint_name}, model: {model}")
+
+model.print_trainable_parameters()
 
 cols = data.column_names
 

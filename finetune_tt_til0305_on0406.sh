@@ -28,7 +28,7 @@ TEST_SIZE=200
 from_data_beginning=True # False
 
 
-CUDA_VISIBLE_DEVICES=${TOT_CUDA} torchrun --nproc_per_node=$CUDA_NUM --master_port=$PORT finetune_multichoice_tt_til0305.py \
+python finetune_multichoice_tt_til0305.py \
 --data_path $DATA_PATH \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \

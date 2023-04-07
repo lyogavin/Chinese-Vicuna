@@ -25,7 +25,7 @@ MODEL_PATH="decapoda-research/llama-7b-hf"
 # using checkpoint-final will cuase issue
 lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-11600"
 TEST_SIZE=200
-
+from_data_beginning=True # False
 
 
 CUDA_VISIBLE_DEVICES=${TOT_CUDA} torchrun --nproc_per_node=$CUDA_NUM --master_port=$PORT finetune_multichoice_tt_til0305.py \
@@ -39,5 +39,6 @@ CUDA_VISIBLE_DEVICES=${TOT_CUDA} torchrun --nproc_per_node=$CUDA_NUM --master_po
 --run_ts $run_ts \
 --max_seq_len 700 \
 --wandb \
---use_test
+--use_test \
+--ignore_data_skip $from_data_beginning
 

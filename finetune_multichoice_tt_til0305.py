@@ -197,9 +197,9 @@ else:
                                                  remove_columns = cols)
     val_data = None
 
-for batch in train_data:
-    print(batch)
-    break
+#for batch in train_data:
+#    print(batch)
+#    break
 
 trainer = transformers.Trainer(
     model=model,

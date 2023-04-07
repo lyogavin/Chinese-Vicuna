@@ -97,7 +97,7 @@ if __name__ == '__main__':
     cols = data['train'].column_names
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000), remove_columns = cols)
 
-
+    to_pad = []
     for i, batch in enumerate(train_data):
         print(f"{i}: {batch}")
         decoded = tokenizer.decode(batch['input_ids'], skip_special_tokens=True)
@@ -107,6 +107,14 @@ if __name__ == '__main__':
 
         assert len(batch['input_ids']) == len(batch['labels'])
         assert len(batch['input_ids']) == len(batch['attention_mask'])
+
+        to_pad.append(batch)
+
+    padded = tokenizer.pad(
+            to_pad[:3],
+            padding=True,
+        )
+    print(padded)
 
 
     #print(testml[10])

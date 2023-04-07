@@ -205,7 +205,9 @@ if args.resume_from_checkpoint:
         adapters_weights = torch.load(checkpoint_name)
         logger.info(f"before set_peft_model_state_dict: model:{model}")
         logger.info(f"weights to load: {adapters_weights}")
-        model = set_peft_model_state_dict(model, adapters_weights)
+        #model = set_peft_model_state_dict(model, adapters_weights)
+        # latest version of peft doesn't return any more
+        set_peft_model_state_dict(model, adapters_weights)
         logger.info(f"set_peft_model_state_dict: model:{model}")
     else:
         logger.info(f"Checkpoint {checkpoint_name} not found")

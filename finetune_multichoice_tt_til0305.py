@@ -132,8 +132,8 @@ config = LoraConfig(
 # ^^^^^ -> not working!
 model=PeftModel.from_pretrained(model,
                                 args.resume_from_checkpoint,
-#                                torch_dtype=torch.float16,
-#                                device_map=device_map,
+                                torch_dtype=torch.float16,
+                                device_map=device_map,
                                ) #"/lora-alpaca-output-dir")
 
 logger.info(f"loaded checkpoint: {args.resume_from_checkpoint}")

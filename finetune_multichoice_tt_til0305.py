@@ -122,7 +122,11 @@ config = LoraConfig(
 # https://github.com/tloen/alpaca-lora/issues/253
 # to fix Parameter at index 127 has been marked as ready twice issue
 #model = get_peft_model(model, config)
-model=PeftModel.from_pretrained(model, args.resume_from_checkpoint) #"/lora-alpaca-output-dir")
+model=PeftModel.from_pretrained(model,
+                                args.resume_from_checkpoint,
+                                torch_dtype=torch.float16,
+                                device_map=device_map,
+                                ) #"/lora-alpaca-output-dir")
 args.resume_from_checkpoint = None
 
 

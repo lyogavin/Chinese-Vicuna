@@ -21,7 +21,8 @@ MODEL_PATH="decapoda-research/llama-13b-hf"
 
 # using checkpoint-final will cuase issue
 #lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-final"
-lora_checkpoint="Chinese-Vicuna/Chinese-Vicuna-lora-13b-belle-and-guanaco"
+#lora_checkpoint="Chinese-Vicuna/Chinese-Vicuna-lora-13b-belle-and-guanaco"
+lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/Chinese-Vicuna-lora-13b-belle-and-guanaco"
 TEST_SIZE=0.05
 from_data_beginning=True # False
 

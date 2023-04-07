@@ -102,7 +102,7 @@ if ddp:
 logger.info(args.model_path)
 model = LlamaForCausalLM.from_pretrained(
     args.model_path,
-    load_in_8bit=True,
+    #load_in_8bit=True,
     device_map=device_map,
     proxies={
         'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',

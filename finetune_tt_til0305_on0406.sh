@@ -23,7 +23,7 @@ DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305
 MODEL_PATH="decapoda-research/llama-7b-hf"
 
 # using checkpoint-final will cuase issue
-lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-11600"
+lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-final"
 TEST_SIZE=200
 from_data_beginning=True # False
 

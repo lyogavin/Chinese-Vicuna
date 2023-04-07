@@ -175,20 +175,26 @@ else:
 
 model.print_trainable_parameters()
 
+cols = data.column_names
 if USE_TEST:
     train_val = data.train_test_split(
         test_size=500, shuffle=True, seed=42
     )
-    train_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len))
-    val_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len))
+    train_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+                                                 remove_columns = cols)
+    val_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+                                                 remove_columns = cols)
 elif VAL_SET_SIZE > 0:
     train_val = data.train_test_split(
         test_size=VAL_SET_SIZE, shuffle=True, seed=42
     )
-    train_data = train_val["train"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len))
-    val_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len))
+    train_data = train_val["train"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+                                                 remove_columns = cols)
+    val_data = train_val["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+                                                 remove_columns = cols)
 else:
-    train_data = data.shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len))
+    train_data = data.shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+                                                 remove_columns = cols)
     val_data = None
 
 trainer = transformers.Trainer(
@@ -216,7 +222,7 @@ trainer = transformers.Trainer(
         report_to="wandb" if args.wandb else [],
         ignore_data_skip=args.ignore_data_skip,
     ),
-    data_collator=transformers.DataCollatorWithPadding(tokenizer, padding=True) #DataCollatorForLanguageModeling(tokenizer, mlm=False)
+    data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False)
 )
 model.config.use_cache = False
 

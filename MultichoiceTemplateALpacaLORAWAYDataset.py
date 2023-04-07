@@ -61,7 +61,7 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
     return {
         "input_ids": input_ids,
         "attention_mask": [1] * len(input_ids),  # attention_mask.squeeze(),
-        "labels": [0] * (len(input_ids) - target_len) + truncated_title_input_ids,
+        "labels": [-100] * (len(input_ids) - target_len) + truncated_title_input_ids,
         #"input_ids": torch.tensor(input_ids),
         #"attention_mask": torch.tensor([1] * len(input_ids)),  # attention_mask.squeeze(),
         #"labels": torch.tensor([-100] * (len(input_ids) - target_len) + truncated_title_input_ids),
@@ -96,6 +96,7 @@ if __name__ == '__main__':
         )
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000))
 
+
     for i, batch in enumerate(train_data):
         print(f"{i}: {batch}")
         decoded = tokenizer.decode(batch['input_ids'], skip_special_tokens=True)
@@ -105,6 +106,7 @@ if __name__ == '__main__':
 
         assert len(batch['input_ids']) == len(batch['labels'])
         assert len(batch['input_ids']) == len(batch['attention_mask'])
+
 
     #print(testml[10])
     #print(testml.tokenizer.decode(testml[10]['input_ids']))

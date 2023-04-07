@@ -90,6 +90,9 @@ if __name__ == '__main__':
         )
     tokenizer.pad_token_id = 0
 
+    # !!!!make it pad lables also!!!!!
+    tokenizer.model_input_names.append('labels')
+
     df = pd.read_csv(data_file)
 
     data = Dataset.from_pandas(df).train_test_split(

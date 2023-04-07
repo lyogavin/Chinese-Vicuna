@@ -130,6 +130,8 @@ model=PeftModel.from_pretrained(model,
 #                                torch_dtype=torch.float16,
 #                                device_map=device_map,
                                ) #"/lora-alpaca-output-dir")
+
+logger.info(f"loaded checkpoint: {args.resume_from_checkpoint}")
 args.resume_from_checkpoint = None
 
 
@@ -141,12 +143,24 @@ tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos tok
 
 df = pd.read_csv(DATA_PATH)
 
+logger.info(f"loadded df from: {DATA_PATH}, len:{len(df)}")
+
 data = Dataset.from_pandas(df)
 
 
-now_max_steps = max((len(data) - VAL_SET_SIZE) // BATCH_SIZE * EPOCHS, EPOCHS)
+val_size_items = VAL_SET_SIZE
+if isinstance(VAL_SET_SIZE, float):
+    logger.info(f"converting float val size: {VAL_SET_SIZE}")
+
+    val_size_items = int(len(data) * VAL_SET_SIZE)
+    logger.info(f"converted to: val size: {val_size_items}")
+
+
+now_max_steps = max((len(data) - val_size_items) // BATCH_SIZE * EPOCHS, EPOCHS)
 
 MAX_STEPS = now_max_steps
+
+logger.info(f"max steps: {MAX_STEPS}, epochs: {EPOCHS}")
 
 if args.resume_from_checkpoint:
 # Check the available weights and load them
@@ -218,12 +232,8 @@ else:
 #    print(batch)
 #    break
 
-trainer = transformers.Trainer(
-    model=model,
-    train_dataset=train_data,
-    eval_dataset=val_data,
-    #data_collator=transformers.DataCollatorWithPadding(),
-    args=transformers.TrainingArguments(
+
+training_args = transformers.TrainingArguments(
         per_device_train_batch_size=MICRO_BATCH_SIZE,
         gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
         warmup_steps=100,
@@ -232,17 +242,25 @@ trainer = transformers.Trainer(
         learning_rate=LEARNING_RATE,
         fp16=True,
         logging_steps=20,
-        evaluation_strategy="steps" if VAL_SET_SIZE > 0 else "no",
-        save_strategy="steps",
-        eval_steps=args.eval_steps if VAL_SET_SIZE > 0 else None,
-        save_steps=args.save_steps,
+        evaluation_strategy="epoch" if VAL_SET_SIZE > 0 else "no",
+        save_strategy="epoch",
+        #eval_steps=args.eval_steps if VAL_SET_SIZE > 0 else None,
+        #save_steps=args.save_steps,
         output_dir=OUTPUT_DIR,
         save_total_limit=30,
         load_best_model_at_end=True if VAL_SET_SIZE > 0 else False,
         ddp_find_unused_parameters=False if ddp else None,
         report_to="wandb" if args.wandb else [],
         ignore_data_skip=args.ignore_data_skip,
-    ),
+    )
+
+logger.info(f"training args: {training_args}")
+trainer = transformers.Trainer(
+    model=model,
+    train_dataset=train_data,
+    eval_dataset=val_data,
+    #data_collator=transformers.DataCollatorWithPadding(),
+    args=training_args,
     data_collator=transformers.DataCollatorForSeq2Seq(tokenizer, label_pad_token_id=0, pad_to_multiple_of=8, return_tensors="pt")
 )
 model.config.use_cache = False
@@ -260,4 +278,9 @@ logger.info("\n If there's a warning about missing keys above, please disregard 
 trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
 
 model.save_pretrained(OUTPUT_DIR)
+
+
+logger.info(f"saved pretrained into: {OUTPUT_DIR}")
+
+logger.info(f"training done!")
 

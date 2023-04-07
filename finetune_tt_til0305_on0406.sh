@@ -24,9 +24,10 @@ MODEL_PATH="decapoda-research/llama-7b-hf"
 
 # using checkpoint-final will cuase issue
 lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-final"
-TEST_SIZE=200
+TEST_SIZE=0.05
 from_data_beginning=True # False
 
+#--use_test \
 
 python finetune_multichoice_tt_til0305.py \
 --data_path $DATA_PATH \
@@ -39,6 +40,5 @@ python finetune_multichoice_tt_til0305.py \
 --run_ts $run_ts \
 --max_seq_len 700 \
 --wandb \
---use_test \
 --ignore_data_skip $from_data_beginning
 

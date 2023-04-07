@@ -223,8 +223,8 @@ if args.resume_from_checkpoint:
 else:
     MAX_STEPS = now_max_steps
 
-
-model.print_trainable_parameters()
+if LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN:
+    model.print_trainable_parameters()
 
 cols = data.column_names
 

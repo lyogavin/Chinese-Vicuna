@@ -28,7 +28,7 @@ from_data_beginning=True # False
 
 #--use_test \
 
-python finetune_multichoice_tt_til0305.py \
+CUDA_VISIBLE_DEVICES="0" python finetune_multichoice_tt_til0305.py \
 --data_path $DATA_PATH \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \

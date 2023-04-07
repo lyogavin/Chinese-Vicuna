@@ -127,17 +127,21 @@ config = LoraConfig(
 #model = get_peft_model(model, config)
 
 
+
+LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN = False
 # https://github.com/tloen/alpaca-lora/issues/253
 # to fix Parameter at index 127 has been marked as ready twice issue
 # ^^^^^ -> not working!
-model=PeftModel.from_pretrained(model,
-                                args.resume_from_checkpoint,
-                                torch_dtype=torch.float16,
-                                device_map=device_map,
-                               ) #"/lora-alpaca-output-dir")
 
-logger.info(f"loaded checkpoint: {args.resume_from_checkpoint}")
-args.resume_from_checkpoint = None
+if LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN:
+    model=PeftModel.from_pretrained(model,
+                                    args.resume_from_checkpoint,
+                                    torch_dtype=torch.float16,
+                                    device_map=device_map,
+                                   ) #"/lora-alpaca-output-dir")
+
+    logger.info(f"loaded checkpoint: {args.resume_from_checkpoint}")
+    args.resume_from_checkpoint = None
 
 
 logger.info(f"loaded checkpoint, setting to NONE: {args.resume_from_checkpoint}")

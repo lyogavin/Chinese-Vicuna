@@ -36,7 +36,7 @@ parser.add_argument("--model_path", type=str, default="decapoda-research/llama-7
 parser.add_argument("--eval_steps", type=int, default=200)
 parser.add_argument("--save_steps", type=int, default=200)
 parser.add_argument("--run_ts", type=int)
-parser.add_argument("--test_size", type=int, default=200)
+parser.add_argument("--test_size", default=0.05)
 parser.add_argument("--resume_from_checkpoint", type=str, default=None)
 parser.add_argument("--ignore_data_skip", type=str, default="False")
 parser.add_argument("--max_seq_len", type=int, default=700)

@@ -27,9 +27,13 @@ from peft import (
 )
 from peft import PeftModel
 
+device_map = "auto"
 
+
+
+MODEL_PATH="decapoda-research/llama-13b-hf"
 model = LlamaForCausalLM.from_pretrained(
-    args.model_path,
+    MODEL_PATH,
     load_in_8bit=True,
     device_map=device_map,
     proxies={
@@ -41,5 +45,5 @@ OUTPUT_DIR = "/home/ubuntu/cloudfs/saved_models/decapoda-research/llama-13b-hf"
 model.save_pretrained(OUTPUT_DIR)
 
 
-logger.info(f"saved pretrained into: {OUTPUT_DIR}")
+print(f"saved pretrained into: {OUTPUT_DIR}")
 

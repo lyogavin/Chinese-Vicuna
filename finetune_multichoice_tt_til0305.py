@@ -223,7 +223,7 @@ if args.resume_from_checkpoint:
 else:
     MAX_STEPS = now_max_steps
 
-model.print_trainable_parameters()
+#model.print_trainable_parameters()
 
 cols = data.column_names
 

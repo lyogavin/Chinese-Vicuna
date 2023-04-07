@@ -25,6 +25,7 @@ from peft import (
     get_peft_model_state_dict,
     set_peft_model_state_dict,
 )
+from peft import PeftModel
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--wandb", action="store_true", default=False)
@@ -116,7 +117,16 @@ config = LoraConfig(
     bias="none",
     task_type="CAUSAL_LM",
 )
-model = get_peft_model(model, config)
+
+
+# https://github.com/tloen/alpaca-lora/issues/253
+# to fix Parameter at index 127 has been marked as ready twice issue
+#model = get_peft_model(model, config)
+model=PeftModel.from_pretrained(model, args.resume_from_checkpoint) #"/lora-alpaca-output-dir")
+args.resume_from_checkpoint = None
+
+
+
 tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos token
 #tokenizer.padding_side = "left"  # Allow batched inference
 

@@ -38,5 +38,6 @@ python finetune_multichoice_tt_til0305.py \
 --run_ts $run_ts \
 --max_seq_len 700 \
 --wandb \
+--use_test \
 --ignore_data_skip $from_data_beginning
 

@@ -259,6 +259,7 @@ training_args = transformers.TrainingArguments(
         per_device_train_batch_size=MICRO_BATCH_SIZE,
         gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
         warmup_steps=100,
+        log_level='info',
         num_train_epochs=EPOCHS,
         max_steps=MAX_STEPS,
         learning_rate=LEARNING_RATE,

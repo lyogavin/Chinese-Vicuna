@@ -42,11 +42,13 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
 
     first_input_ids = tokenizer.encode(instruction_prompt_first,
                                       truncation=True,
-                                      max_length=max_seq_length - len(second_input_ids))
+                                      max_length=max_seq_length - len(second_input_ids))[:-1]
+
+
+    truncated_title_input_ids = tokenizer.encode(truncated_title, add_special_tokens=False)
 
     input_ids = first_input_ids + second_input_ids
 
-    truncated_title_input_ids = tokenizer.encode(truncated_title, add_special_tokens=False)
 
     target_len = len(truncated_title_input_ids)
 
@@ -62,10 +64,11 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100)
     #target = input_ids
     #labels = target.clone().detach()
     #labels[target == tokenizer.pad_token_id] = -100
+    len_user_prompt_tokens = len(input_ids) - target_len
     return {
         "input_ids": input_ids,
         "attention_mask": [1] * len(input_ids),  # attention_mask.squeeze(),
-        "labels": [-100] * (len(input_ids) - target_len) + truncated_title_input_ids,
+        "labels": [-100] * len_user_prompt_tokens + input_ids[len_user_prompt_tokens:],
         #"input_ids": torch.tensor(input_ids),
         #"attention_mask": torch.tensor([1] * len(input_ids)),  # attention_mask.squeeze(),
         #"labels": torch.tensor([-100] * (len(input_ids) - target_len) + truncated_title_input_ids),

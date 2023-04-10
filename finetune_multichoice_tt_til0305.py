@@ -286,7 +286,7 @@ class MyCallback(transformers.TrainerCallback):
     "A callback that prints a message at the beginning of training"
 
     def on_evaluate(self, args, state, control, **kwargs):
-        if "model" in kwargs:
+        if "model" in kwargs and "tokenizer" in kwargs:
             print("on_evaluate...")
             inputs = "你好,中国的首都在哪里？"  # "你好,美国的首都在哪里？"
             print(f"test input: {inputs}")

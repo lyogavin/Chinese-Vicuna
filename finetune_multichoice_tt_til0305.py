@@ -299,6 +299,26 @@ class MyCallback(transformers.TrainerCallback):
             )
             #print(generation_output)
             print(tokenizer.decode(generation_output[0]))
+
+            inputs='''Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
+            
+### Instruction:
+你是自媒体创作者，需要为输入的文案内容，撰写指定类型的爆款标题。需要撰写的标题类型：私藏...。
+
+### Input:
+法式吊灯 灯灯灯灯灯 吸顶灯
+
+### Response:'''
+            print(f"test input: {inputs}")
+            #tokenizer = kwargs['tokenizer']
+            model = kwargs['model']
+            input_ids = tokenizer(inputs, return_tensors="pt")['input_ids']
+            generation_output = model.generate(
+                input_ids=input_ids,
+                max_new_tokens=25,
+            )
+            #print(generation_output)
+            print(tokenizer.decode(generation_output[0]))
         else:
             print(f"model not found in kwargs, skipping")
 

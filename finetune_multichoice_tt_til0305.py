@@ -287,18 +287,19 @@ class MyCallback(transformers.TrainerCallback):
 
     def on_evaluate(self, args, state, control, **kwargs):
         if "model" in kwargs:
-            print("on_evaluate...")
+            logger.info("on_evaluate...")
             inputs = "你好,中国的首都在哪里？"  # "你好,美国的首都在哪里？"
-            print(f"test input: {inputs}")
+            logger.info(f"test input: {inputs}")
             #tokenizer = kwargs['tokenizer']
             model = kwargs['model']
             input_ids = tokenizer(inputs, return_tensors="pt")['input_ids']
+            input_ids = input_ids.to('cuda')
             generation_output = model.generate(
                 input_ids=input_ids,
                 max_new_tokens=15,
             )
             #print(generation_output)
-            print(tokenizer.decode(generation_output[0]))
+            logger.info(tokenizer.decode(generation_output[0]))
 
             inputs='''Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
             
@@ -309,18 +310,19 @@ class MyCallback(transformers.TrainerCallback):
 法式吊灯 灯灯灯灯灯 吸顶灯
 
 ### Response:'''
-            print(f"test input: {inputs}")
+            logger.info(f"test input: {inputs}")
             #tokenizer = kwargs['tokenizer']
             model = kwargs['model']
             input_ids = tokenizer(inputs, return_tensors="pt")['input_ids']
+            input_ids = input_ids.to('cuda')
             generation_output = model.generate(
                 input_ids=input_ids,
                 max_new_tokens=25,
             )
             #print(generation_output)
-            print(tokenizer.decode(generation_output[0]))
+            logger.info(tokenizer.decode(generation_output[0]))
         else:
-            print(f"model not found in kwargs, skipping")
+            logger.info(f"model not found in kwargs, skipping")
 
 
 

@@ -1,5 +1,5 @@
 model_path="decapoda-research/llama-13b-hf"
-lora_path="./lora-Vicuna"
+lora_path="./lora-Vicuna/checkpoint-2"
 
 
 import sys

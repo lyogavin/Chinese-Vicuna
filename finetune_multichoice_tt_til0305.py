@@ -46,8 +46,8 @@ args = parser.parse_args()
 
 if args.use_test:
     print(f"use test, eval/save steps set to 50")
-    args.eval_steps = 50
-    args.save_steps = 50
+    args.eval_steps = 2
+    args.save_steps = 2
 
 
 

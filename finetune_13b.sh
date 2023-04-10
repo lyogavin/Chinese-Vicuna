@@ -13,6 +13,6 @@ CUDA_VISIBLE_DEVICES="0" nohup python  finetune.py \
 --data_path $DATA_PATH \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \
---eval_steps 200 \
---save_steps 200 \
+--eval_steps 5 \
+--save_steps 5 \
 --test_size $TEST_SIZE &

@@ -1,4 +1,4 @@
-model_path="/home/ubuntu/cloudfs/saved_models/decapoda-research/llama-13b-hf/"
+model_path="decapoda-research/llama-13b-hf/"
 lora_path="./lora-Vicuna"
 
 

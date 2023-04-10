@@ -44,6 +44,11 @@ parser.add_argument("--ignore_data_skip", type=str, default="False")
 parser.add_argument("--max_seq_len", type=int, default=700)
 args = parser.parse_args()
 
+if args.use_test:
+    print(f"use test, eval/save steps set to 50")
+    args.eval_steps = 50
+    args.save_steps = 50
+
 
 
 logging_file_path = f"/home/ubuntu/cloudfs/logs/training_log_{args.run_ts}.log"
@@ -265,17 +270,34 @@ training_args = transformers.TrainingArguments(
         learning_rate=LEARNING_RATE,
         fp16=True,
         logging_steps=20,
-        evaluation_strategy="epoch" if VAL_SET_SIZE > 0 else "no",
-        save_strategy="epoch",
-        #eval_steps=args.eval_steps if VAL_SET_SIZE > 0 else None,
-        #save_steps=args.save_steps,
+        #evaluation_strategy="epoch" if VAL_SET_SIZE > 0 else "no",
+        #save_strategy="epoch",
+        eval_steps=args.eval_steps if VAL_SET_SIZE > 0 else None,
+        save_steps=args.save_steps,
         output_dir=OUTPUT_DIR,
-        save_total_limit=30,
+        save_total_limit=10,
         load_best_model_at_end=True if VAL_SET_SIZE > 0 else False,
         ddp_find_unused_parameters=False if ddp else None,
         report_to="wandb" if args.wandb else [],
         ignore_data_skip=args.ignore_data_skip,
     )
+
+class MyCallback(transformers.TrainerCallback):
+    "A callback that prints a message at the beginning of training"
+
+    def on_evaluate(self, args, state, control, **kwargs):
+        print("on_evaluate...")
+        inputs = "你好,中国的首都在哪里？"  # "你好,美国的首都在哪里？"
+        print(f"test input: {inputs}")
+        input_ids = self.tokenizer(inputs, return_tensors="pt")['input_ids']
+        generation_output = self.model.generate(
+            input_ids=input_ids,
+            max_new_tokens=15,
+        )
+        #print(generation_output)
+        print(tokenizer.decode(generation_output[0]))
+
+
 
 logger.info(f"training args: {training_args}")
 trainer = transformers.Trainer(
@@ -283,6 +305,7 @@ trainer = transformers.Trainer(
     train_dataset=train_data,
     eval_dataset=val_data,
     #data_collator=transformers.DataCollatorWithPadding(),
+    callbacks=[MyCallback],
     args=training_args,
     data_collator=transformers.DataCollatorForSeq2Seq(tokenizer, label_pad_token_id=0, pad_to_multiple_of=8, return_tensors="pt")
 )

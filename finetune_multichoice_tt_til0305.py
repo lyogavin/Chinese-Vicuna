@@ -285,12 +285,12 @@ training_args = transformers.TrainingArguments(
 class MyCallback(transformers.TrainerCallback):
     "A callback that prints a message at the beginning of training"
 
-    def on_evaluate(self, args, state, control, **kwargs):
+    def on_evaluate(self, args, state, control, model=None, tokenizer=None, **kwargs):
         print("on_evaluate...")
         inputs = "你好,中国的首都在哪里？"  # "你好,美国的首都在哪里？"
         print(f"test input: {inputs}")
-        input_ids = self.tokenizer(inputs, return_tensors="pt")['input_ids']
-        generation_output = self.model.generate(
+        input_ids = tokenizer(inputs, return_tensors="pt")['input_ids']
+        generation_output = model.generate(
             input_ids=input_ids,
             max_new_tokens=15,
         )

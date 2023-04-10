@@ -36,8 +36,8 @@ CUDA_VISIBLE_DEVICES="0" nohup python finetune_multichoice_tt_til0305.py \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \
 --tokenizer_path $TOKENIZER_PATH \
---eval_steps 200 \
---save_steps 200 \
+--eval_steps 30 \
+--save_steps 30 \
 --test_size $TEST_SIZE \
 --resume_from_checkpoint $lora_checkpoint \
 --run_ts $run_ts \

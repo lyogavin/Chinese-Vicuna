@@ -15,7 +15,17 @@ from functools import partial
 df_cols_to_use = ['title_template_name', 'title', 'content']
 
 
+g_first_time_asserted = False
+
+
 def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=100):
+    global g_first_time_asserted
+
+    if not g_first_time_asserted:
+        g_first_time_asserted = True
+        assert tokenizer.encode("你好，中国的首都在哪？") == tokenizer.encode("你好，中国的首都在哪？", add_special_tokens=False), \
+            ""
+        assert tokenizer.encode("你好，中国的首都在哪？") == tokenizer.encode("你好，中国的首都在哪？", add_special_tokens=True)
     def get_promote_title_type(row):
         return row['title_template_name']
 

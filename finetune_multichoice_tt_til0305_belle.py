@@ -78,11 +78,11 @@ USE_TEST = args.use_test
 
 # optimized for RTX 4090. for larger GPUs, increase some of these?
 MICRO_BATCH_SIZE = 8  # this could actually be 5 but i like powers of 2
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 MAX_STEPS = None
 GRADIENT_ACCUMULATION_STEPS = BATCH_SIZE // MICRO_BATCH_SIZE
 EPOCHS = 10  # we don't always need 3 tbh
-LEARNING_RATE = 4e-5  # the Karpathy constant
+LEARNING_RATE = 2e-5  # the Karpathy constant
 CUTOFF_LEN = 256  # 256 accounts for about 96% of the data
 LORA_R = 16
 LORA_ALPHA = 16

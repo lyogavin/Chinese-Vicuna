@@ -211,8 +211,9 @@ if __name__ == '__main__':
         assert decoded.endswith(decoded_labels)
 
         if -100 in batch['labels']:
-            assert -100 not in batch['labels'][batch['labels'].rindex(-100)+1:]
-            assert len([x for x in batch['labels'][:batch['labels'].rindex(-100)+1] if x != -100]) ==0
+            rindex = len(batch['labels']) - batch['labels'][-1::-1].index(-100) - 1
+            assert -100 not in batch['labels'][rindex+1:]
+            assert len([x for x in batch['labels'][:rindex] if x != -100]) ==0
 
 
 

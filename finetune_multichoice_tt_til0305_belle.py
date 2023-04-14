@@ -78,11 +78,11 @@ USE_TEST = args.use_test
 
 # optimized for RTX 4090. for larger GPUs, increase some of these?
 MICRO_BATCH_SIZE = 8  # this could actually be 5 but i like powers of 2
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 MAX_STEPS = None
 GRADIENT_ACCUMULATION_STEPS = BATCH_SIZE // MICRO_BATCH_SIZE
 EPOCHS = 10  # we don't always need 3 tbh
-LEARNING_RATE = 1e-4  # the Karpathy constant
+LEARNING_RATE = 4e-5  # the Karpathy constant
 CUTOFF_LEN = 256  # 256 accounts for about 96% of the data
 LORA_R = 16
 LORA_ALPHA = 16
@@ -303,15 +303,16 @@ class MyCallback(transformers.TrainerCallback):
             #print(generation_output)
             logger.info(tokenizer.decode(generation_output[0]))
 
-            inputs='''Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
-            
-### Instruction:
-你是自媒体创作者，需要为输入的文案内容，撰写指定类型的爆款标题。需要撰写的标题类型：私藏...。
-
-### Input:
-法式吊灯 灯灯灯灯灯 吸顶灯
-
-### Response:'''
+            inputs='''你是小红书文案创作者，需要根据文案撰写标题。
+一种起标题的方式是套用"标题的悬念感比较强"模版。其原理是：只强调、夸张结果，不提解决方案，保留部分信息，引发好奇，促进点击。
+比如这个标题："摆脱焦虑迷茫，读完这6本书，我突然开窍了"。
+比如这个标题："哭了， 我参加校招的时候怎么没刷到这个❗"。
+比如这个标题："已成功减肥70斤‼️练这个真的瘦太快啦??"。
+比如这个标题："感谢小红书，让我1.5k就装修好modelY"。
+比如这个标题："差点以为这小子抽到真的摩拉克斯了！"。
+根据以下文案，按照这个模版，创作小红书标题：
+文案：法式吊灯 吸顶灯
+标题：'''
             logger.info(f"test input: {inputs}")
             #tokenizer = kwargs['tokenizer']
             model = kwargs['model']

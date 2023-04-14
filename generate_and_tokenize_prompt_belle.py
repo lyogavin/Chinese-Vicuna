@@ -187,6 +187,8 @@ if __name__ == '__main__':
             test_size=100, shuffle=True, seed=42
         )
     cols = data['train'].column_names
+    del cols['title']
+    del cols['content']
     train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000), remove_columns = cols)
 
 

@@ -278,8 +278,8 @@ if __name__ == '__main__':
 
         assert res['input_ids'][0] == tokenizer.bos_token_id, f"deres:{deres}"
         assert res['input_ids'][-1] == tokenizer.eos_token_id
-        assert tokenizer.bos_token_id not in deres[1:]
-        assert tokenizer.eos_token_id not in deres[:-1]
+        assert tokenizer.bos_token_id not in res['input_ids'][1:]
+        assert tokenizer.eos_token_id not in res['input_ids'][:-1]
 
 
 

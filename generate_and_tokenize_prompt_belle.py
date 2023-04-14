@@ -207,7 +207,8 @@ if __name__ == '__main__':
         assert tokenizer.encode(tokenizer.bos_token)[0] not in batch['input_ids'][1:]
         assert tokenizer.encode(tokenizer.eos_token)[0] not in batch['input_ids'][:-1]
 
-        assert decoded_labels == batch['title'], f"{decoded_labels} has to be equal to  {batch['title']}, content: {batch['content']}"
+        assert decoded_labels == batch['title'], f"{decoded_labels} has to be equal to  {batch['title']}, content: {batch['content']}" \
+            f"batch:{batch}"
         assert decoded.endswith(decoded_labels)
 
         if -100 in batch['labels']:

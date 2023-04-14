@@ -61,7 +61,7 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
         assert tokenizer.padding_side == "left"
 
     # 1. get prompt for tt
-    assert (tt_df['title_template_name'] == data_point['title_template_name']).sum() ==1, f"{data_point['title_template_name']} has to match 1 rec"
+    assert (tt_df['title_template_name'] == data_point['title_template_name']).sum() ==1, f"{data_point['title_template_name']} has to match 1 rec in {tt_df['title_template_name'].unique().tolist()}"
     langchain_oa_prompt = tt_df[tt_df['title_template_name'] == data_point['title_template_name']].iloc[0]['langchain_oa_prompt']
 
     # 1.5 truncate target

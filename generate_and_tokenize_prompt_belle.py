@@ -267,23 +267,23 @@ if __name__ == '__main__':
                              'title':test_title})
 
         if test_title in deres and test_content in deres:
-            assert len(res['input_ids']) <= i
+            assert len(res['input_ids']) <= i, f"deres:{deres}"
             assert len(res['input_ids']) == len(res_no_max['input_ids'])
         elif test_title in deres and test_content not in deres:
             assert len(res['input_ids']) <= i, f"res: {res}, i:{i}, deres:{deres}"
-            assert len(res_no_max['input_ids']) > i
+            assert len(res_no_max['input_ids']) > i, f"deres:{deres}"
             assert len(res_min_content_no_max['input_ids']) < i, f"deres:{deres}"
         elif test_title not in deres and test_content not in deres:
-            assert len(res['input_ids']) <= i
-            assert len(res_no_max['input_ids']) > i
-            assert len(res_min_content_no_max['input_ids']) > i
+            assert len(res['input_ids']) <= i, f"deres:{deres}"
+            assert len(res_no_max['input_ids']) > i, f"deres:{deres}"
+            assert len(res_min_content_no_max['input_ids']) > i, f"deres:{deres}"
         elif test_title not in deres and test_content in deres:
             assert False
 
         assert res['input_ids'][0] == tokenizer.bos_token_id, f"deres:{deres}"
-        assert res['input_ids'][-1] == tokenizer.eos_token_id
-        assert tokenizer.bos_token_id not in res['input_ids'][1:]
-        assert tokenizer.eos_token_id not in res['input_ids'][:-1]
+        assert res['input_ids'][-1] == tokenizer.eos_token_id,  f"deres:{deres}"
+        assert tokenizer.bos_token_id not in res['input_ids'][1:],  f"deres:{deres}"
+        assert tokenizer.eos_token_id not in res['input_ids'][:-1], f"deres:{deres}"
 
 
 

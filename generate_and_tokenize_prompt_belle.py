@@ -106,6 +106,7 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
     if not train_on_inputs:
 
         # 6. set prompt part to -100
+        # better user target len as there might be cases multi char maps to one token like "：我"
         #user_prompt = input_text
         tokenized_target= tokenize(target_text, tokenizer, add_eos_token=True, cutoff_len=max_seq_length)
         target_len = len(tokenized_target["input_ids"]) - 1 # bos
@@ -255,11 +256,11 @@ if __name__ == '__main__':
                              'content':test_content,
                              'title':test_title})
 
-        res_empty_content_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
+        res_min_content_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "title_template_name":tt,
                              "source_category":"newrank_healthcare",
-                             'content':'',
+                             'content':'我',
                              'title':test_title})
 
         if test_title in deres and test_content in deres:
@@ -271,7 +272,7 @@ if __name__ == '__main__':
         elif test_title not in deres and test_content not in deres:
             assert len(res['input_ids']) == i
             assert len(res_no_max['input_ids']) > i
-            assert len(res_empty_content_no_max['input_ids']) > i
+            assert len(res_min_content_no_max['input_ids']) > i
         elif test_title not in deres and test_content in deres:
             assert False
 

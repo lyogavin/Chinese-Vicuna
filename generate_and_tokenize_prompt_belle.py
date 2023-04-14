@@ -201,10 +201,10 @@ if __name__ == '__main__':
         assert len(batch['input_ids']) == len(batch['labels'])
         assert len(batch['input_ids']) == len(batch['attention_mask'])
         assert len(batch['input_ids']) <= 1000
-        assert batch['input_ids'].startswith(tokenizer.bos_token)
-        assert batch['input_ids'].endswith(tokenizer.eos_token)
-        assert tokenizer.bos_token not in batch['input_ids'][1:]
-        assert tokenizer.eos_token not in batch['input_ids'][:-1]
+        assert batch['input_ids'][1] == tokenizer.encode(tokenizer.bos_token)
+        assert batch['input_ids'][-1] == tokenizer.encode(tokenizer.eos_token)
+        assert tokenizer.encode(tokenizer.bos_token) not in batch['input_ids'][1:]
+        assert tokenizer.encode(tokenizer.eos_token) not in batch['input_ids'][:-1]
 
         assert decoded_labels == batch['title']
         assert decoded.endswith(decoded_labels)

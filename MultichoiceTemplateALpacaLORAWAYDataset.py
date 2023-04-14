@@ -108,6 +108,7 @@ if __name__ == '__main__':
     tokenizer.pad_token_id = 0
 
     df = pd.read_csv(data_file)[df_cols_to_use]
+    print(f"{df.dtypes}")
 
     data = Dataset.from_pandas(df).train_test_split(
             test_size=100, shuffle=True, seed=42

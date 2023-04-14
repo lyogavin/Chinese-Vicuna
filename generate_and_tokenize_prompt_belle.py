@@ -133,7 +133,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(
-            "BelleGroup/BELLE-7B-2M"#, add_eos_token=True
+            "BelleGroup/BELLE-7B-2M", #, add_eos_token=True
+            proxies={
+                'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',
+                'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
         )
 
     tokenizer.pad_token_id = 0

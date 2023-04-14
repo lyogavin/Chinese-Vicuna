@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
     print(f"\n\n1. going through training dataset, asserting everything")
     for i, batch in enumerate(train_data):
-        print(f"{i}: {batch}")
+        #print(f"{i}: {batch}")
         decoded = tokenizer.decode(batch['input_ids'], skip_special_tokens=True)
         decoded_labels = tokenizer.decode([x if x!=-100 else 0 for x in batch['labels']], skip_special_tokens=True)
         #print(f"decoded: {decoded}")
@@ -207,7 +207,7 @@ if __name__ == '__main__':
         assert tokenizer.encode(tokenizer.bos_token)[0] not in batch['input_ids'][1:]
         assert tokenizer.encode(tokenizer.eos_token)[0] not in batch['input_ids'][:-1]
 
-        assert decoded_labels == batch['title']
+        assert decoded_labels == batch['title'], f"{decoded_labels} has to be equal to  {batch['title']}"
         assert decoded.endswith(decoded_labels)
 
         if -100 in batch['labels']:

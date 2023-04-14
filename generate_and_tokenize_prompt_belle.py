@@ -5,7 +5,7 @@ import os
 from datasets import load_dataset
 from datasets import Dataset
 from tqdm import tqdm
-from transformers import LlamaTokenizer
+from transformers import AutoTokenizer
 import pandas as pd
 import numpy as np
 import torch
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     group.add_argument('--max-seq-length', type=int, default=1024)
     args = parser.parse_args()
 
-    tokenizer = LlamaTokenizer.from_pretrained(
+    tokenizer = AutoTokenizer.from_pretrained(
             "BelleGroup/BELLE-7B-2M"#, add_eos_token=True
         )
 

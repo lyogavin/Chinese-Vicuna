@@ -2,6 +2,10 @@
 import os
 import logging, sys
 
+# proxy for wandb
+os.environ["HTTPS_PROXY"] = "socks5h://exmpl:abcd1234@43.156.235.42:8128"
+
+
 import torch
 import torch.nn as nn
 import bitsandbytes as bnb

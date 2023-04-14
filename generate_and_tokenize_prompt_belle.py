@@ -124,7 +124,7 @@ if __name__ == '__main__':
     #modelfile = '/cognitive_comp/wuziwei/pretrained_model_hf/medical_v2'
     #datafile = '/home/ubuntu/cloudfs/ghost_data/merge_all_add_1208_1228//merge_all_0108_with_multichoice_scores_and_templates_val_sample_1673194850.csv.tgz'
     data_file='/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305_download/' \
-              'merge_all_till0305_with_multichoice_scores_and_templates_val_sample_1679690410.csv.tgz'
+              'merge_all_till0305_with_multichoice_scores_and_templates_val_1679690410.csv.tgz'
 
     parser = argparse.ArgumentParser(description='hf test', allow_abbrev=False)
     group = parser.add_argument_group(title='test args')

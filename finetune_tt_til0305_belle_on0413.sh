@@ -41,7 +41,7 @@ CUDA_VISIBLE_DEVICES="0" nohup python finetune_multichoice_tt_til0305_belle.py \
 --save_steps 5 \
 --test_size $TEST_SIZE \
 --run_ts $run_ts \
---max_seq_len 1000 \
+--max_seq_len 800 \
 --use_test \
 --wandb \
 --ignore_data_skip $from_data_beginning &

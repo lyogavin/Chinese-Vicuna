@@ -81,9 +81,12 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
     empty_content_prompt_token_ids = tokenize(empty_content_prompt, tokenizer, cutoff_len=max_seq_length)['input_ids']
     target_token_ids = tokenize(truncated_title, tokenizer, cutoff_len=max_seq_length)['input_ids']
 
-    content_token_ids_cut_off = tokenize(data_point['content'], tokenizer,
-            cutoff_len=max_seq_length - len(empty_content_prompt_token_ids) - len(target_token_ids))['input_ids']
-    truncated_content = tokenizer.decode(content_token_ids_cut_off, skip_special_tokens=True)
+    if max_seq_length - len(empty_content_prompt_token_ids) - len(target_token_ids) <=0:
+        truncated_content = ''
+    else:
+        content_token_ids_cut_off = tokenize(data_point['content'], tokenizer,
+                cutoff_len=max_seq_length - len(empty_content_prompt_token_ids) - len(target_token_ids))['input_ids']
+        truncated_content = tokenizer.decode(content_token_ids_cut_off, skip_special_tokens=True)
 
     # 3. get input
     input_text = langchain_oa_prompt.format(content=truncated_content)

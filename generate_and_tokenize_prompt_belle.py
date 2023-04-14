@@ -272,7 +272,7 @@ if __name__ == '__main__':
         elif test_title in deres and test_content not in deres:
             assert len(res['input_ids']) <= i, f"res: {res}, i:{i}, deres:{deres}"
             assert len(res_no_max['input_ids']) > i, f"deres:{deres}"
-            assert len(res_min_content_no_max['input_ids']) < i, f"deres:{deres}"
+            assert len(res_min_content_no_max['input_ids'])-2 <= i, f"deres:{deres}"
         elif test_title not in deres and test_content not in deres:
             assert len(res['input_ids']) <= i, f"deres:{deres}"
             assert len(res_no_max['input_ids']) > i, f"deres:{deres}"

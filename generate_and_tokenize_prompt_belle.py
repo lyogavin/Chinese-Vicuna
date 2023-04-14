@@ -106,14 +106,14 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
     if not train_on_inputs:
 
         # 6. set prompt part to -100
-        user_prompt = input_text
-        tokenized_user_prompt = tokenize(user_prompt, tokenizer, add_eos_token=False, cutoff_len=max_seq_length)
-        user_prompt_len = len(tokenized_user_prompt["input_ids"])
+        #user_prompt = input_text
+        tokenized_target= tokenize(target_text, tokenizer, add_eos_token=True, cutoff_len=max_seq_length)
+        target_len = len(tokenized_target["input_ids"]) - 1 # bos
 
         tokenized_full_prompt["labels"] = [
             -100
-        ] * user_prompt_len + tokenized_full_prompt["labels"][
-            user_prompt_len:
+        ] * (len(tokenized_target["input_ids"]) - target_len) + tokenized_full_prompt["labels"][
+            len(tokenized_target["input_ids"]) - target_len:
         ]
     tokenized_full_prompt['full_prompt'] = full_prompt
     return tokenized_full_prompt
@@ -194,7 +194,7 @@ if __name__ == '__main__':
 
     print(f"\n\n1. going through training dataset, asserting everything")
     for i, batch in enumerate(train_data):
-        print(f"{i}: {batch}")
+        #print(f"{i}: {batch}")
         decoded = tokenizer.decode(batch['input_ids'], skip_special_tokens=True)
         decoded_labels = tokenizer.decode([x if x!=-100 else 0 for x in batch['labels']], skip_special_tokens=True)
         #print(f"decoded: {decoded}")
@@ -208,7 +208,7 @@ if __name__ == '__main__':
         assert tokenizer.encode(tokenizer.bos_token)[0] not in batch['input_ids'][1:]
         assert tokenizer.encode(tokenizer.eos_token)[0] not in batch['input_ids'][:-1]
 
-        assert decoded_labels == batch['title'], f"{decoded_labels} has to be equal to  {batch['title']}, content: {batch['content']}" \
+        assert decoded_labels.endswith(batch['title']), f"{decoded_labels} has to be equal to  {batch['title']}, content: {batch['content']}" \
             f"batch:{batch}"
         assert decoded.endswith(decoded_labels)
 

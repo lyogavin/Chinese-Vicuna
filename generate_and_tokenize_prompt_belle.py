@@ -100,7 +100,7 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
 
         # 6. set prompt part to -100
         user_prompt = input_text
-        tokenized_user_prompt = tokenize(user_prompt, tokenizer, add_eos_token=False)
+        tokenized_user_prompt = tokenize(user_prompt, tokenizer, add_eos_token=False, cutoff_len=max_seq_length)
         user_prompt_len = len(tokenized_user_prompt["input_ids"])
 
         tokenized_full_prompt["labels"] = [

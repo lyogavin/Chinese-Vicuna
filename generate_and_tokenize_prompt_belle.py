@@ -17,6 +17,13 @@ df_cols_to_use = ['title_template_name', 'title', 'content']
 tt_df = pd.read_pickle('/home/ubuntu/cloudfs/ghost_data/newrank_hotrank_download/total_merged_downloads/' \
                  'multichoices_title_template_info_public_add_langchain_oa_templates_0327_1679930635.pickle')
 
+tags_prompt = {'权威_内部推荐背书':'权威/内部人士/过来人身份推荐背书',
+               '标题中强化对比反差冲突': '强化反差冲突对比',
+               '标题中使用数字': '使用数字',
+               '标题的悬念感比较强': '制造悬念感'}
+
+tt_df['title_template_name'] = tt_df.title_template_name.apply(lambda x: tags_prompt[x] if x in tags_prompt else x)
+
 
 ## example:
 '你是小红书文案创作者，需要根据文案撰写标题。\n一种起标题的方式是套用"标题的悬念感比较强"模版。其原理是：只强调、夸张结果，不提解决方案，保留部分信息，引发好奇，促进点击。\n比如这个标题："摆脱焦虑迷茫，读完这6本书，我突然开窍了"。\n比如这个标题："哭了， 我参加校招的时候怎么没刷到这个❗"。\n比如这个标题："已成功减肥70斤‼️练这个真的瘦太快啦??"。\n比如这个标题："感谢小红书，让我1.5k就装修好modelY"。\n比如这个标题："差点以为这小子抽到真的摩拉克斯了！"。' \
@@ -144,9 +151,38 @@ if __name__ == '__main__':
     tokenizer.padding_side = "left"
 
 
-    df = pd.read_csv(data_file)[df_cols_to_use]
+    df = pd.read_csv(data_file, usecols=df_cols_to_use)
     print(f"df types: {df.dtypes}")
     print(f"df head: {df.head()}")
+    remapping_new_tts = {
+        '深扒…的小心机': '深扒...的小心机',
+        '后悔没早点…': '后悔没早点...',
+        '穿出门被问了很多次的…，出门没输过': '...出门没输过',
+        '任何人错过这个…我都会伤心的OK?': '任何人错过我都会伤心的...',
+        '我怎么没早点发现！': '我怎么没早点发现...',
+        '这是谁发明的!': '这是谁发明的...',
+        '只有1%知道的…': '只有1%知道的...',
+        '当你…的时候人家已经…': '当你...的时候人家已经...',
+        '…是怎么狠狠奖励我的': '...是怎么狠狠奖励我的',
+        '请大数据把这篇推荐给…': '请大数据把这篇推荐给...',
+        '为它疯狂/心动一万次': '为它疯狂/心动一万次',
+        '让人一眼就沦陷': '...让人一眼就沦陷',
+        '一见钟情的': '一见钟情的...',
+        '好看到犯规': '...好看到犯规',
+        '可盐可甜': '...可盐可甜...',
+        '你的DNA动了吗': '...你的DNA动了吗...',
+        '近期风很大的': '近期风很大的...',
+        '温柔buff叠满的': '...温柔buff叠满...',
+        '氛围感叠满的': '氛围感叠满的...',
+        '被惊艳到了': '被惊艳到了...',
+        '快来看看你做对了没有': '快来看看你做对了没有...',
+        '被夸爆的…在这里': '被夸爆的...',
+    }
+    
+    df['title_template_name'] = df.title_template_name.apply(
+        lambda x: remapping_new_tts[x] if x in remapping_new_tts else x)
+
+
     data = Dataset.from_pandas(df).train_test_split(
             test_size=100, shuffle=True, seed=42
         )

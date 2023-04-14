@@ -38,7 +38,7 @@ CUDA_VISIBLE_DEVICES="0" nohup python finetune_multichoice_tt_til0305_belle.py \
 --model_path $MODEL_PATH \
 --tokenizer_path $TOKENIZER_PATH \
 --eval_steps 15 \
---save_steps 50 \
+--save_steps 60 \
 --test_size $TEST_SIZE \
 --run_ts $run_ts \
 --max_seq_len 1000 \

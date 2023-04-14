@@ -14,8 +14,7 @@ OUTPUT_PATH=$ROOT_DIR_BASE/output_$run_ts
 mkdir -p $OUTPUT_PATH
 
 
-DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305_download/" \
-  "merge_all_till0305_with_multichoice_scores_and_templates_val_hot_notes_only_1679690410.csv.tgz" #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
+DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/api_0305_download/merge_all_till0305_with_multichoice_scores_and_templates_val_hot_notes_only_1679690410.csv.tgz" #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
 
 #MODEL_PATH="decapoda-research/llama-7b-hf"
 MODEL_PATH="/home/ubuntu/cloudfs/saved_models/BelleGroup/BELLE-7B-2M/"

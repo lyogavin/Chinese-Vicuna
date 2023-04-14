@@ -192,7 +192,7 @@ if __name__ == '__main__':
 
     print(f"\n\n1. going through training dataset, asserting everything")
     for i, batch in enumerate(train_data):
-        #print(f"{i}: {batch}")
+        print(f"{i}: {batch}")
         decoded = tokenizer.decode(batch['input_ids'], skip_special_tokens=True)
         decoded_labels = tokenizer.decode([x if x!=-100 else 0 for x in batch['labels']], skip_special_tokens=True)
         #print(f"decoded: {decoded}")

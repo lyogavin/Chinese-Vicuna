@@ -115,6 +115,7 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
         ] * user_prompt_len + tokenized_full_prompt["labels"][
             user_prompt_len:
         ]
+    tokenized_full_prompt['full_prompt'] = full_prompt
     return tokenized_full_prompt
 
 

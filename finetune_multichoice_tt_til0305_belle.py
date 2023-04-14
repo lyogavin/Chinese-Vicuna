@@ -3,7 +3,8 @@ import os
 import logging, sys
 
 # proxy for wandb
-os.environ["HTTPS_PROXY"] = "socks5h://exmpl:abcd1234@43.156.235.42:8128"
+os.environ["HTTPS_PROXY"] = "https://exmpl:abcd1234@43.156.235.42:8128"
+os.environ["HTTP_PROXY"] = "http://exmpl:abcd1234@43.156.235.42:8128"
 
 
 import torch

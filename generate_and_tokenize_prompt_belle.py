@@ -178,7 +178,7 @@ if __name__ == '__main__':
         '快来看看你做对了没有': '快来看看你做对了没有...',
         '被夸爆的…在这里': '被夸爆的...',
     }
-    
+
     df['title_template_name'] = df.title_template_name.apply(
         lambda x: remapping_new_tts[x] if x in remapping_new_tts else x)
 
@@ -201,10 +201,10 @@ if __name__ == '__main__':
         assert len(batch['input_ids']) == len(batch['labels'])
         assert len(batch['input_ids']) == len(batch['attention_mask'])
         assert len(batch['input_ids']) <= 1000
-        assert decoded.startswith(tokenizer.bos_token)
-        assert decoded.endswith(tokenizer.eos_token)
-        assert tokenizer.bos_token not in decoded[1:]
-        assert tokenizer.eos_token not in decoded[:-1]
+        assert batch['input_ids'].startswith(tokenizer.bos_token)
+        assert batch['input_ids'].endswith(tokenizer.eos_token)
+        assert tokenizer.bos_token not in batch['input_ids'][1:]
+        assert tokenizer.eos_token not in batch['input_ids'][:-1]
 
         assert decoded_labels == batch['title']
         assert decoded.endswith(decoded_labels)

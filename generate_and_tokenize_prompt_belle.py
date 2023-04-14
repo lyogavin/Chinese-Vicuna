@@ -291,7 +291,7 @@ if __name__ == '__main__':
 
     print(f"3. go over whole train data to make sure no exception...")
 
-    dataset = Dataset.from_pandas(df).shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer))
+    dataset = Dataset.from_pandas(df).shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=650))
 
 
 

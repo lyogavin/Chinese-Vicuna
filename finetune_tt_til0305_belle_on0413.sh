@@ -37,12 +37,11 @@ CUDA_VISIBLE_DEVICES="0" nohup python finetune_multichoice_tt_til0305_belle.py \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \
 --tokenizer_path $TOKENIZER_PATH \
---eval_steps 5 \
---save_steps 5 \
+--eval_steps 15 \
+--save_steps 50 \
 --test_size $TEST_SIZE \
 --run_ts $run_ts \
---max_seq_len 900 \
---use_test \
+--max_seq_len 1000 \
 --wandb \
 --ignore_data_skip $from_data_beginning &
 

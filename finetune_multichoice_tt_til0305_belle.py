@@ -94,6 +94,9 @@ LORA_ALPHA = 16
 LORA_DROPOUT = 0.05
 VAL_SET_SIZE = args.test_size #2000
 
+if USE_TEST:
+    EPOCHS = 1
+
 if VAL_SET_SIZE > 1.:
     VAL_SET_SIZE = int(VAL_SET_SIZE)
 

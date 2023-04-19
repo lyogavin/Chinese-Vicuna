@@ -190,7 +190,7 @@ if __name__ == '__main__':
     print(f"\n\n2. trying different input len and asserting cut off correctly")
 
     test_content = '将数据转换成模型训练的输入将数据转换成模型训练的输入将数据转换成模型训练的输入'
-    test_title = '将数据转换成模型训练的输入'
+    test_title = '我恨你，但是你能给我一只小猫吗'
 
     for i in range(200, 40, -1):
         print(f"\nfor max len: {i}")

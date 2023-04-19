@@ -13,7 +13,7 @@ CUDA_NUM=${#CUDAs[@]}
 PORT="12345"
 
 
-ROOT_DIR_BASE=/home/ubuntu/cloudfs/saved_models/cn_alpaca_lora
+ROOT_DIR_BASE=/home/ubuntu/cloudfs/saved_models/belle7blora
 OUTPUT_PATH=$ROOT_DIR_BASE/output_$run_ts
 
 mkdir -p $OUTPUT_PATH

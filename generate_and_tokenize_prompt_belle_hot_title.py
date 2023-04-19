@@ -88,8 +88,8 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
     # 5. put everything together...
     full_prompt = input_text+target_text
     #tokenized_full_prompt = tokenize(full_prompt, tokenizer, cutoff_len=max_seq_length)
-    tokenized_input = tokenize(input_text, tokenizer, add_eos_token=False, cutoff_len=max_seq_length)
     tokenized_target = tokenize(target_text, tokenizer, add_eos_token=False, cutoff_len=max_seq_length)
+    tokenized_input = tokenize(input_text, tokenizer, add_eos_token=False, cutoff_len=max_seq_length - len(tokenized_target['input_ids']))
 
     train_on_inputs = False
     if not train_on_inputs:

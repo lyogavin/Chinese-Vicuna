@@ -209,14 +209,14 @@ if __name__ == '__main__':
                              'tags':'我',
                              'title':test_title})
 
-        if test_title in deres and test_content in deres and res['prompted_input'] in deres:
+        if test_title in deres and res['prompted_input'] in deres:
             assert len(res['input_ids']) <= 120, f"deres:{deres}"
             assert len(res['input_ids']) == len(res_no_max['input_ids']), f"error for {test_title} {test_content} - {res}, {deres}"
-        elif res['prompted_input'] in deres and test_content not in deres:
+        elif test_title in deres and res['prompted_input'] not in deres:
             assert len(res['input_ids']) <= 120, f"res: {res}, i:{i}, deres:{deres}"
             assert len(res_no_max['input_ids']) > 120, f"deres:{deres}"
             assert len(res_min_content_no_max['input_ids'])-2 <= 120, f"deres:{deres}"
-        elif res['prompted_input'] not in deres and test_content in deres:
+        elif test_title not in deres and res['prompted_input'] in deres:
             assert False, f"error for {test_title} {test_content} - {res}, {deres}"
 
         assert res['input_ids'][0] == tokenizer.bos_token_id, f"deres:{deres}"

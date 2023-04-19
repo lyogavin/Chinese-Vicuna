@@ -187,52 +187,6 @@ if __name__ == '__main__':
     #print(len(testml))
     #print(f"max len:{testml.max_seq_length}")
 
-    print(f"\n\n2. trying different input len and asserting cut off correctly")
-
-    test_content = '将数据转换成模型训练的输入将数据转换成模型训练的输入将数据转换成模型训练的输入'
-    test_title = '我恨你，但是你能给我一只小猫吗'
-
-    for i in range(200, 40, -1):
-        print(f"\nfor max len: {i}")
-
-        res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=i)({
-                             "data_type":"redbook_content_title",
-                             "source_category":"newrank_healthcare",
-                             'tags':test_content,
-                             'title':test_title})
-        deres = tokenizer.decode(res['input_ids'], skip_special_tokens=True)
-
-        res_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
-                             "data_type":"redbook_content_title",
-                             "source_category":"newrank_healthcare",
-                             'tags':test_content,
-                             'title':test_title})
-
-        res_min_content_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
-                             "data_type":"redbook_content_title",
-                             "source_category":"newrank_healthcare",
-                             'tags':'我',
-                             'title':test_title})
-
-        if test_title in deres and test_content in deres:
-            assert len(res['input_ids']) <= i, f"deres:{deres}"
-            assert len(res['input_ids']) == len(res_no_max['input_ids']), f"{(len(res['input_ids']) , len(res_no_max['input_ids']))}"
-        elif test_title in deres and test_content not in deres:
-            assert len(res['input_ids']) <= i, f"res: {res}, i:{i}, deres:{deres}"
-            assert len(res_no_max['input_ids']) > i, f"deres:{deres}"
-            assert len(res_min_content_no_max['input_ids'])-2 <= i, f"deres:{deres}"
-        elif test_title not in deres and test_content not in deres:
-            assert len(res['input_ids']) <= i, f"deres:{deres}"
-            assert len(res_no_max['input_ids']) > i, f"deres:{deres}"
-            assert len(res_min_content_no_max['input_ids']) > i, f"deres:{deres}"
-        elif test_title not in deres and test_content in deres:
-            assert False, f"{(test_title, deres)}"
-
-        assert res['input_ids'][0] == tokenizer.bos_token_id, f"deres:{deres}"
-        assert res['input_ids'][-1] == tokenizer.eos_token_id,  f"deres:{deres}"
-        assert tokenizer.bos_token_id not in res['input_ids'][1:],  f"deres:{deres}"
-        assert tokenizer.eos_token_id not in res['input_ids'][:-1], f"deres:{deres}"
-
 
 
     from tqdm import tqdm

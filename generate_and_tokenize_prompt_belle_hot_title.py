@@ -187,6 +187,7 @@ if __name__ == '__main__':
         test_content = r['tags']
         test_title = r['title']
 
+
         res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=120)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
@@ -208,7 +209,7 @@ if __name__ == '__main__':
 
         if test_title in deres and test_content in deres:
             assert len(res['input_ids']) <= 120, f"deres:{deres}"
-            assert len(res['input_ids']) == len(res_no_max['input_ids']), f"error for {r} - {res}, {deres}"
+            assert len(res['input_ids']) == len(res_no_max['input_ids']), f"error for {test_title} {test_content} - {res}, {deres}"
         elif test_title in deres and test_content not in deres:
             assert len(res['input_ids']) <= 120, f"res: {res}, i:{i}, deres:{deres}"
             assert len(res_no_max['input_ids']) > 120, f"deres:{deres}"

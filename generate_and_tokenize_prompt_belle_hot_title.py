@@ -190,20 +190,20 @@ if __name__ == '__main__':
         res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=120)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
-                             'content':test_content,
+                             'tags':test_content,
                              'title':test_title})
         deres = tokenizer.decode(res['input_ids'], skip_special_tokens=True)
 
         res_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
-                             'content':test_content,
+                             'tags':test_content,
                              'title':test_title})
 
         res_min_content_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
-                             'content':'我',
+                             'tags':'我',
                              'title':test_title})
 
         if test_title in deres and test_content in deres:

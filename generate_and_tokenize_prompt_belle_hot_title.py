@@ -216,7 +216,7 @@ if __name__ == '__main__':
             assert len(res_no_max['input_ids']) > 120, f"deres:{deres}"
             assert len(res_min_content_no_max['input_ids'])-2 <= 120, f"deres:{deres}"
         elif res['prompted_input'] not in deres and test_content in deres:
-            assert False
+            assert False, f"error for {test_title} {test_content} - {res}, {deres}"
 
         assert res['input_ids'][0] == tokenizer.bos_token_id, f"deres:{deres}"
         assert res['input_ids'][-1] == tokenizer.eos_token_id,  f"deres:{deres}"

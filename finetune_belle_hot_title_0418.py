@@ -117,16 +117,16 @@ model = AutoModelForCausalLM.from_pretrained(
     load_in_8bit=True,
     device_map=device_map,
     cache_dir="/home/ubuntu/cloudfs/huggingfacecache/",
-    proxies={
-        'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',
-        'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
+    #proxies={
+    #    'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',
+    #    'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
 )
 tokenizer = AutoTokenizer.from_pretrained(
     args.tokenizer_path, #, add_eos_token=True
     cache_dir="/home/ubuntu/cloudfs/huggingfacecache/",
-    proxies={
-        'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',
-        'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
+    #proxies={
+    #    'http':'socks5h://exmpl:abcd1234@43.156.235.42:8128',
+    #    'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
 )
 
 model = prepare_model_for_int8_training(model)

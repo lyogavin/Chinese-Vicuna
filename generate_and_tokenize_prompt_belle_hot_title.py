@@ -148,7 +148,7 @@ if __name__ == '__main__':
 
     data = Dataset.from_pandas(df)
     cols = data.column_names
-    train_data = data.shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=105),
+    train_data = data.shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=120),
                                             remove_columns = [x for x in cols if x not in ['title', 'tags']])
 
 
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
         assert len(batch['input_ids']) == len(batch['labels'])
         assert len(batch['input_ids']) == len(batch['attention_mask'])
-        assert len(batch['input_ids']) <= 105
+        assert len(batch['input_ids']) <= 120, f"{batch} - len err"
         assert batch['input_ids'][0] == tokenizer.encode(tokenizer.bos_token)[0]
         assert batch['input_ids'][-1] == tokenizer.encode(tokenizer.eos_token)[0]
         assert tokenizer.encode(tokenizer.bos_token)[0] not in batch['input_ids'][1:]

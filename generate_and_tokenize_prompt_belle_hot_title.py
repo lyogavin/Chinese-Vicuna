@@ -58,10 +58,11 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
         assert tokenizer.padding_side == "left"
 
 
+    # 1. truncate tags
+    truncated_tags = data_point['tags']
+    truncated_tags = truncated_tags[:120] if isinstance(truncated_tags, str) else ' '
 
-
-
-    prompt_part = f'你是小红书博主，需要根据输入的内容，创作爆款小红书标题。\n需要起标题的内容：{data_point["tags"]}\n爆款标题：'
+    prompt_part = f'你是小红书博主，需要根据输入的内容，创作爆款小红书标题。\n需要起标题的内容：{truncated_tags}\n爆款标题：'
 
 
 

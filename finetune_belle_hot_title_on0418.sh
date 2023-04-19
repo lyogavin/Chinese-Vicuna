@@ -8,10 +8,11 @@ echo "RUN TS: $run_ts"
 echo "START TIME: $(date)"
 
 
-ROOT_DIR_BASE=/home/ubuntu/cloudfs/saved_models/cn_alpaca_lora
+ROOT_DIR_BASE=/home/ubuntu/cloudfs/saved_models/belle7blora
 OUTPUT_PATH=$ROOT_DIR_BASE/output_$run_ts
 
 mkdir -p $OUTPUT_PATH
+mkdir -p /home/ubuntu/cloudfs/logs
 
 
 DATA_PATH="/home/ubuntu/cloudfs/ghost_data/title_multi_choice_training/hot_title_tags2title_train_0418_1681864800.csv.tgz" #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"

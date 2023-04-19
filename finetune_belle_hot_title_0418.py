@@ -265,9 +265,12 @@ else:
                                                  remove_columns = cols)
     val_data = None
 
-#for batch in train_data:
-#    print(batch)
-#    break
+
+if args.use_test:
+    logger.info(f"testing, dumping some data")
+    for batch in train_data:
+        print(batch)
+        break
 
 
 training_args = transformers.TrainingArguments(

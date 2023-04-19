@@ -42,7 +42,7 @@ CUDA_VISIBLE_DEVICES="0" nohup python finetune_belle_hot_title_0418.py \
 --save_steps 60 \
 --test_size $TEST_SIZE \
 --run_ts $run_ts \
---max_seq_len 105 \
+--max_seq_len 120 \
 --wandb \
 --use_test \
 --ignore_data_skip $from_data_beginning &

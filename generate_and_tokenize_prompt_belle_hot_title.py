@@ -22,7 +22,7 @@ from functools import partial
 
 
 # follow BELLE's imeplementation as we pretrain based on BELLE, keep it consistent
-# https://github.com/LianjiaTech/BELLE/blob/main/train/finetune.py#L119
+# https://github.com/LianjiaTech/BELLE/blob/de98f72dedc542ead65dfb2b7d24602e07266bb0/train/finetune.py#L95
 def tokenize(prompt, tokenizer=None, add_eos_token=True, cutoff_len=-1):
     result = tokenizer(
         prompt,
@@ -81,11 +81,15 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
 
 
     # 4. get target
-    target_text = truncated_title
+    target_text = truncated_title + tokenizer.eos_token
+
+    # !!!! tokenize first, then jion to keep consistent with inferrence !!!!
 
     # 5. put everything together...
     full_prompt = input_text+target_text
-    tokenized_full_prompt = tokenize(full_prompt, tokenizer, cutoff_len=max_seq_length)
+    #tokenized_full_prompt = tokenize(full_prompt, tokenizer, cutoff_len=max_seq_length)
+    tokenized_input = tokenize(input_text, tokenizer, add_eos_token=False, cutoff_len=max_seq_length)
+    tokenized_target = tokenize(input_text, tokenizer, add_eos_token=False, cutoff_len=max_seq_length)
 
     train_on_inputs = False
     if not train_on_inputs:
@@ -93,16 +97,16 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
         # 6. set prompt part to -100
         # better user target len as there might be cases multi char maps to one token like "：我"
         #user_prompt = input_text
-        tokenized_target= tokenize(target_text, tokenizer, add_eos_token=True, cutoff_len=max_seq_length)
-        target_len = len(tokenized_target["input_ids"]) - 1 # bos
+        tokenized_input['input_ids'] = tokenized_input['input_ids'] + tokenized_target['input_ids']
 
-        tokenized_full_prompt["labels"] = [
-            -100
-        ] * (len(tokenized_target["input_ids"]) - target_len) + tokenized_full_prompt["labels"][
-            len(tokenized_target["input_ids"]) - target_len:
-        ]
-    tokenized_full_prompt['full_prompt'] = full_prompt
-    return tokenized_full_prompt
+        target_len = len(tokenized_target["input_ids"]) #- 1 # bos
+
+        tokenized_input["labels"] = [
+                -100
+            ] * (len(tokenized_input["input_ids"]) - target_len) + tokenized_target["input_ids"]
+
+        tokenized_input['attention_mask'] = [1] * (len(tokenized_input["input_ids"]))
+    return tokenized_input
 
 
 
@@ -142,12 +146,10 @@ if __name__ == '__main__':
     print(f"df head: {df.head()}")
 
 
-    data = Dataset.from_pandas(df).train_test_split(
-            test_size=100, shuffle=True, seed=42
-        )
-    cols = data['train'].column_names
-    train_data = data["test"].shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000),
-                                            remove_columns = [x for x in cols if x not in ['title', 'content']])
+    data = Dataset.from_pandas(df)
+    cols = data.column_names
+    train_data = data.shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=105),
+                                            remove_columns = [x for x in cols if x not in ['title', 'tags']])
 
 
     print(f"\n\n1. going through training dataset, asserting everything")
@@ -160,7 +162,7 @@ if __name__ == '__main__':
 
         assert len(batch['input_ids']) == len(batch['labels'])
         assert len(batch['input_ids']) == len(batch['attention_mask'])
-        assert len(batch['input_ids']) <= 1000
+        assert len(batch['input_ids']) <= 105
         assert batch['input_ids'][0] == tokenizer.encode(tokenizer.bos_token)[0]
         assert batch['input_ids'][-1] == tokenizer.encode(tokenizer.eos_token)[0]
         assert tokenizer.encode(tokenizer.bos_token)[0] not in batch['input_ids'][1:]
@@ -174,6 +176,8 @@ if __name__ == '__main__':
             rindex = len(batch['labels']) - batch['labels'][-1::-1].index(-100) - 1
             assert -100 not in batch['labels'][rindex+1:]
             assert len([x for x in batch['labels'][:rindex] if x != -100]) ==0
+            assert batch['labels'][rindex+1:] == batch['input_ids'][rindex+1:]
+            assert tokenizer.decode(batch['labels'][rindex+1:], skip_special_tokens=True) == decoded_labels
 
 
 

@@ -22,7 +22,7 @@ mkdir -p $OUTPUT_PATH
 DATA_PATH="/home/ubuntu/cloudfs/ghost_data/title_multi_choice_training/hot_title_tags2title_train_0418_1681864800.csv.tgz" #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
 
 #MODEL_PATH="decapoda-research/llama-7b-hf"
-MODEL_PATH="/home/ubuntu/cloudfs/saved_models/BelleGroup/BELLE-7B-2M/"
+MODEL_PATH="BelleGroup/BELLE-7B-2M/"
 
 # use local model
 #MODEL_PATH="/home/ubuntu/cloudfs/saved_models/decapoda-research/llama-13b-hf"

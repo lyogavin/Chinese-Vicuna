@@ -35,11 +35,13 @@ from peft import PeftModel
 parser = argparse.ArgumentParser()
 parser.add_argument("--wandb", action="store_true", default=False)
 parser.add_argument("--use_test", action="store_true", default=False)
+parser.add_argument("--no_peft", action="store_true", default=False)
 parser.add_argument("--data_path", type=str, default="merge.json")
 parser.add_argument("--output_path", type=str, default="belle_7b_2m")
 parser.add_argument("--model_path", type=str, default="BelleGroup/BELLE-7B-2M")
 parser.add_argument("--tokenizer_path", type=str, default="BelleGroup/BELLE-7B-2M")
 
+parser.add_argument("--save_strategy", type=str, default="steps")
 parser.add_argument("--eval_steps", type=int, default=200)
 parser.add_argument("--save_steps", type=int, default=200)
 parser.add_argument("--run_ts", type=int)
@@ -140,8 +142,8 @@ config = LoraConfig(
     task_type="CAUSAL_LM",
 )
 
-
-model = get_peft_model(model, config)
+if not args.no_peft:
+    model = get_peft_model(model, config)
 
 
 LOAD_PEFT_CHECKPOINT_FROM_PRETRAIN = False
@@ -288,7 +290,7 @@ training_args = transformers.TrainingArguments(
         eval_steps=args.eval_steps if VAL_SET_SIZE > 0 else None,
         save_steps=args.save_steps,
         output_dir=OUTPUT_DIR,
-        save_total_limit=10,
+        save_total_limit=5,
         load_best_model_at_end=True if VAL_SET_SIZE > 0 else False,
         ddp_find_unused_parameters=False if ddp else None,
         report_to="wandb" if args.wandb else [],
@@ -361,10 +363,11 @@ trainer = transformers.Trainer(
 )
 model.config.use_cache = False
 
-old_state_dict = model.state_dict
-model.state_dict = (
-    lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
-).__get__(model, type(model))
+if not args.no_peft:
+    old_state_dict = model.state_dict
+    model.state_dict = (
+        lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
+    ).__get__(model, type(model))
 
 if torch.__version__ >= "2" and sys.platform != "win32":
     model = torch.compile(model)

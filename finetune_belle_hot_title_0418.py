@@ -131,7 +131,8 @@ tokenizer = AutoTokenizer.from_pretrained(
         'https':'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
 )
 
-model = prepare_model_for_int8_training(model)
+if not args.no_peft:
+    model = prepare_model_for_int8_training(model)
 
 config = LoraConfig(
     r=LORA_R,

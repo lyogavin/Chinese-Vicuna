@@ -250,7 +250,8 @@ else:
 
 #logger.info(f"loaded weight from {checkpoint_name}, model: {model}")
 
-model.print_trainable_parameters()
+if not args.no_peft:
+    model.print_trainable_parameters()
 
 cols = data.column_names
 

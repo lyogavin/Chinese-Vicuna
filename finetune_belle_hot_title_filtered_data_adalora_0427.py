@@ -269,6 +269,9 @@ def parse_args():
         action="store_true",
         help="Whether to use debug mode",
     )
+    parser.add_argument("--run_ts", type=int)
+    parser.add_argument("--model_path", type=str, default="BelleGroup/BELLE-7B-2M")
+    parser.add_argument("--tokenizer_path", type=str, default="BelleGroup/BELLE-7B-2M")
 
     args = parser.parse_args()
 

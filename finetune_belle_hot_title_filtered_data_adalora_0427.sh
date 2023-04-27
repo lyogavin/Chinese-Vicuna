@@ -27,7 +27,7 @@ TOKENIZER_PATH="BelleGroup/BELLE-7B-2M"
 #lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/checkpoint-final"
 #lora_checkpoint="Chinese-Vicuna/Chinese-Vicuna-lora-13b-belle-and-guanaco"
 #lora_checkpoint="/home/ubuntu/cloudfs/Chinese-Vicuna/lora-Vicuna/Chinese-Vicuna-lora-13b-belle-and-guanaco"
-TEST_SIZE=5
+TEST_SIZE=50
 #from_data_beginning=True # False
 
 

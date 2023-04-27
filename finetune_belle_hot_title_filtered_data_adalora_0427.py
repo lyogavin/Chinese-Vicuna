@@ -58,7 +58,7 @@ from generate_and_tokenize_prompt_belle_hot_title_finetune_data import generate_
 def parse_args():
     parser = argparse.ArgumentParser(description="Whisper Fine-Tuning with AdaLora")
     parser.add_argument("--data_path", type=str, default="merge.json")
-    parser.add_argument("--test_size", type=float, default=0.05)
+    parser.add_argument("--test_size", type=int, default=5)
 
     parser.add_argument(
         "--dataset_name",
@@ -593,6 +593,9 @@ def main():
 
         val_size_items = int(len(data) * val_size_items)
         logger.info(f"converted to: val size: {val_size_items}")
+
+    if args.debug_mode:
+        val_size_items = 5
 
     cols = data.column_names
 

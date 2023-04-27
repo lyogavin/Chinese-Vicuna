@@ -44,9 +44,10 @@ TEST_SIZE=5
 # theirs: bart-large: batch 32/64 5e-4
 # adalora hyper parms also follow paper Appendix.E
 # we use 8% params according to the curve in page 9
-#
+# ref appendix C for init r final r
 accelerate launch --config_file config.yaml peft_adalora_whisper_large_training.py \
     --debug_mode \
+    --data_path $DATA_PATH \
     --run_ts $run_ts \
     --model_path $MODEL_PATH \
     --tokenizer_path $TOKENIZER_PATH \
@@ -55,11 +56,11 @@ accelerate launch --config_file config.yaml peft_adalora_whisper_large_training.
     --per_device_eval_batch_size 8 \
     --dataloader_pin_memory \
     --dataloader_num_workers 2 \
-    --learning_rate 1e-4 \
+    --learning_rate 1e-3 \
     --weight_decay 1e-4 \
-    --num_train_epochs 10 \
+    --num_train_epochs 3 \
     --test_size $TEST_SIZE \
-    --gradient_accumulation_steps 1 \
+    --gradient_accumulation_steps 16 \
     --lr_scheduler_type "linear" \
     --num_warmup_steps 50 \
     --output_dir $OUTPUT_PATH \
@@ -72,8 +73,8 @@ accelerate launch --config_file config.yaml peft_adalora_whisper_large_training.
     --logging_steps 25 \
     --use_peft \
     --use_adalora \
-    --init_r 12 \
-    --target_r 8 \
+    --init_r 32 \
+    --target_r 24 \
     --tinit 100 \
     --tfinal 800 \
     --delta_t 10 \

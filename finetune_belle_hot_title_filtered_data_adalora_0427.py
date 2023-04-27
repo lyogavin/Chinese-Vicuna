@@ -601,7 +601,7 @@ def main():
     if args.debug_mode:
         val_size_items = 5
 
-    cols = data.column_names
+    cols = data.column_names + ['prompted_input']
 
     if val_size_items > 0:
         train_val = data.train_test_split(

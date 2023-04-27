@@ -48,7 +48,7 @@ TEST_SIZE=5
 # adalora hyper parms also follow paper Appendix.E
 # we use 8% params according to the curve in page 9
 # ref appendix C for init r final r
-accelerate launch  peft_adalora_whisper_large_training.py \
+accelerate launch  finetune_belle_hot_title_filtered_data_adalora_0427.py \
     --debug_mode \
     --data_path $DATA_PATH \
     --run_ts $run_ts \

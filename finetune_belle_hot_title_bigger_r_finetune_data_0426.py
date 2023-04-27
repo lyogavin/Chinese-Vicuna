@@ -84,7 +84,7 @@ USE_TEST = args.use_test
 
 
 # optimized for RTX 4090. for larger GPUs, increase some of these?
-MICRO_BATCH_SIZE = 32  # this could actually be 5 but i like powers of 2
+MICRO_BATCH_SIZE = 8  # this could actually be 5 but i like powers of 2
 BATCH_SIZE = 128
 MAX_STEPS = None
 GRADIENT_ACCUMULATION_STEPS = BATCH_SIZE // MICRO_BATCH_SIZE

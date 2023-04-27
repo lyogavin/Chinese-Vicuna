@@ -59,17 +59,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Whisper Fine-Tuning with AdaLora")
     parser.add_argument("--data_path", type=str, default="merge.json")
     parser.add_argument("--test_size", type=float, default=0.05)
-    parser.add_argument(
-        "--model_name_or_path",
-        type=str,
-        help="Path to pretrained model or model identifier from huggingface.co/models.",
-        required=True,
-    )
-    parser.add_argument("--language", type=str, help="Language to use for training; e.g., 'Hindi' ", required=True)
-    parser.add_argument("--language_abbr", type=str, help="Language to use for training; e.g., 'hi' ", required=True)
-    parser.add_argument(
-        "--task", type=str, default="transcribe", help="Task to use for training; e.g., 'transcribe' ", required=False
-    )
+
     parser.add_argument(
         "--dataset_name",
         type=str,

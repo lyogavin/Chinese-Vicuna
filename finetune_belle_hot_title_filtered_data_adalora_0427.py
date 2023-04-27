@@ -691,6 +691,9 @@ def main():
             'https': 'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
     )
 
+    if args.debug_mode:
+        logger.info(f"print model: \n {model}")
+
 
     if len(set(model.hf_device_map.values()).intersection({"cpu", "disk"})) > 0:
         raise ValueError("Training on CPU or disk is not supported.")

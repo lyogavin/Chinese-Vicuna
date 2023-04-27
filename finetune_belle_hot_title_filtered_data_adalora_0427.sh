@@ -39,13 +39,16 @@ TEST_SIZE=5
 #--dataset_name "mozilla-foundation/common_voice_11_0" \
 #--push_to_hub \
 #--hub_token $HUB_TOKEN \
+#--config_file config.yaml
+
+
 
 # lr follow adalora paper Appendix.E,  language gen, but much bigger model so bigger lr:
 # theirs: bart-large: batch 32/64 5e-4
 # adalora hyper parms also follow paper Appendix.E
 # we use 8% params according to the curve in page 9
 # ref appendix C for init r final r
-accelerate launch --config_file config.yaml peft_adalora_whisper_large_training.py \
+accelerate launch  peft_adalora_whisper_large_training.py \
     --debug_mode \
     --data_path $DATA_PATH \
     --run_ts $run_ts \

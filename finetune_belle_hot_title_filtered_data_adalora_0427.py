@@ -272,6 +272,7 @@ def parse_args():
     parser.add_argument("--run_ts", type=int)
     parser.add_argument("--model_path", type=str, default="BelleGroup/BELLE-7B-2M")
     parser.add_argument("--tokenizer_path", type=str, default="BelleGroup/BELLE-7B-2M")
+    parser.add_argument("--max_seq_len", type=int, default=200)
 
     args = parser.parse_args()
 

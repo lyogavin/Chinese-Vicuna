@@ -63,6 +63,7 @@ accelerate launch  finetune_belle_hot_title_filtered_data_adalora_0427.py \
     --weight_decay 1e-4 \
     --num_train_epochs 3 \
     --test_size $TEST_SIZE \
+    --max_seq_len 200 \
     --gradient_accumulation_steps 16 \
     --lr_scheduler_type "linear" \
     --num_warmup_steps 50 \

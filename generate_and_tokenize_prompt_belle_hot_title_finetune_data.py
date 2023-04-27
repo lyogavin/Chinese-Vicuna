@@ -145,7 +145,7 @@ if __name__ == '__main__':
     tokenizer.padding_side = "left"
 
 
-    df = pd.read_csv(data_file, usecols=['title', 'tags'])
+    df = pd.read_csv(data_file, usecols=['title', 'content'])
     print(f"df types: {df.dtypes}")
     print(f"df head: {df.head()}")
 
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     data = Dataset.from_pandas(df)
     cols = data.column_names
     train_data = data.shuffle().map(partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=120),
-                                            remove_columns = [x for x in cols if x not in ['title', 'tags']])
+                                            remove_columns = [x for x in cols if x not in ['title', 'content']])
 
 
     print(f"\n\n1. going through training dataset, asserting everything")

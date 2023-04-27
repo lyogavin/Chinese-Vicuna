@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Union
 import datasets
 
 # metric imports
-import evaluate
+#import evaluate
 import numpy as np
 import torch
 import transformers
@@ -670,7 +670,7 @@ def main():
     )
 
     # metric
-    metric = evaluate.load("wer")
+    #metric = evaluate.load("wer")
 
     # model
     #model = WhisperForConditionalGeneration.from_pretrained(

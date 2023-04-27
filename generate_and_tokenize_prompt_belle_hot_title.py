@@ -49,7 +49,7 @@ def tokenize(prompt, tokenizer=None, add_eos_token=True, cutoff_len=-1):
 
 g_first_time_asserted = False
 
-def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
+def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1, return_prompt=True):
     global g_first_time_asserted
 
     if not g_first_time_asserted:
@@ -107,7 +107,8 @@ def generate_and_tokenize_prompt(data_point, tokenizer=None, max_seq_length=-1):
             ] * (len(tokenized_input["input_ids"]) - target_len) + tokenized_target["input_ids"]
 
         tokenized_input['attention_mask'] = [1] * (len(tokenized_input["input_ids"]))
-        tokenized_input['prompted_input'] = prompt_part
+        if return_prompt:
+            tokenized_input['prompted_input'] = prompt_part
     return tokenized_input
 
 

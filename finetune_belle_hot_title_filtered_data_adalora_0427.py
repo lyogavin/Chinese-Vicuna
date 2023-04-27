@@ -601,21 +601,21 @@ def main():
     if args.debug_mode:
         val_size_items = 5
 
-    cols = data.column_names + ['prompted_input']
+    cols = data.column_names #+ ['prompted_input']
 
     if val_size_items > 0:
         train_val = data.train_test_split(
             test_size=val_size_items, shuffle=True, seed=42
         )
         train_data = train_val["train"].shuffle().map(
-            partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+            partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len, return_prompt=False),
             remove_columns=cols)
         val_data = train_val["test"].shuffle().map(
-            partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+            partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len, return_prompt=False),
             remove_columns=cols)
     else:
         train_data = data.shuffle().map(
-            partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len),
+            partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=args.max_seq_len, return_prompt=False),
             remove_columns=cols)
         val_data = None
 

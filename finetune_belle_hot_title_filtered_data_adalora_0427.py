@@ -585,6 +585,9 @@ def main():
             'https': 'socks5h://exmpl:abcd1234@43.156.235.42:8128'}
     )
 
+    tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos token
+    tokenizer.padding_side = "left"  # Allow batched inference
+
     data = Dataset.from_pandas(df)
 
     val_size_items = args.test_size

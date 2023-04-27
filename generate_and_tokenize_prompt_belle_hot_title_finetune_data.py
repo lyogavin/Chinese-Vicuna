@@ -188,27 +188,27 @@ if __name__ == '__main__':
     print(f"\n\n2. trying different input len and asserting cut off correctly")
 
     for i, r in tqdm(df.iterrows(), total=len(df)):
-        test_content = r['tags']
+        test_content = r['content']
         test_title = r['title']
 
 
         res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=120)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
-                             'tags':test_content,
+                             'content':test_content,
                              'title':test_title})
         deres = tokenizer.decode(res['input_ids'], skip_special_tokens=True)
 
         res_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
-                             'tags':test_content,
+                             'content':test_content,
                              'title':test_title})
 
         res_min_content_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
-                             'tags':'我',
+                             'content':'我',
                              'title':test_title})
 
         if test_title in deres and res['prompted_input'] in deres:

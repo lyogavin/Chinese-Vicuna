@@ -734,7 +734,7 @@ def main():
                 deltaT=args.delta_t,
                 lora_alpha=args.lora_alpha,
                 lora_dropout=args.lora_dropout,
-                target_modules=["query_key_value"], #, "dense_h_to_4h", "dense_4h_to_h"],
+                target_modules=["query_key_value", "dense_h_to_4h", "dense_4h_to_h"],
                 orth_reg_weight=args.orth_reg_weight,
             )
         else:

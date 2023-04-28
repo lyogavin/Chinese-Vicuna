@@ -694,6 +694,8 @@ def main():
     if args.debug_mode:
         logger.info(f"print model: \n {model}")
 
+        logger.info(f"default rank pattern: {model.peft_config['default'].rank_pattern}")
+
 
     if len(set(model.hf_device_map.values()).intersection({"cpu", "disk"})) > 0:
         raise ValueError("Training on CPU or disk is not supported.")

@@ -694,7 +694,6 @@ def main():
     if args.debug_mode:
         logger.info(f"print model: \n {model}")
 
-        logger.info(f"default rank pattern: {model.peft_config['default'].rank_pattern}")
 
 
     if len(set(model.hf_device_map.values()).intersection({"cpu", "disk"})) > 0:
@@ -715,7 +714,9 @@ def main():
     if args.use_peft:
         from peft import prepare_model_for_int8_training
 
-        model = prepare_model_for_int8_training(model, output_embedding_layer_name="proj_out")
+        model = prepare_model_for_int8_training(model,
+                                                #output_embedding_layer_name="proj_out"
+            )
 
         # as Whisper model uses Conv layer in encoder, checkpointing disables grad computation
         # to avoid this, make the inputs trainable
@@ -749,6 +750,10 @@ def main():
 
         model = get_peft_model(model, config)
         model.print_trainable_parameters()
+
+        if args.debug_mode:
+            logger.info(f"default rank pattern: {model.peft_config['default'].rank_pattern}")
+
 
     # optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)

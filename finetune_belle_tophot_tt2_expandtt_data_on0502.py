@@ -169,7 +169,10 @@ tokenizer.padding_side = "left"  # Allow batched inference
 
 #data = load_dataset("json", data_files=DATA_PATH)
 
-df = pd.read_pickle(DATA_PATH, usecols=['title', 'content'])
+df = pd.read_pickle(DATA_PATH,
+                    #usecols=['title', 'content']
+                    )
+df = df[['title', 'content']]
 
 #logger.info(f"model from: get_peft_model: {model}")
 

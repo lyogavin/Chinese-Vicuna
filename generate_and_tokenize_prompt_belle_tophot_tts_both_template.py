@@ -156,7 +156,11 @@ if __name__ == '__main__':
     tokenizer.padding_side = "left"
 
 
-    df = pd.read_pickle(data_file, usecols=['title', 'content'], nrows=10000)
+    df = pd.read_pickle(data_file,
+                        #usecols=['title', 'content'],
+                        #nrows=10000
+                        )
+    df = df[['title', 'content']][:10000]
     print(f"df types: {df.dtypes}")
     print(f"df head: {df.head()}")
 

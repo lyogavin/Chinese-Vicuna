@@ -15,8 +15,7 @@ mkdir -p $OUTPUT_PATH
 mkdir -p /home/ubuntu/cloudfs/logs
 
 
-DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/data_pipline/hot_tt_train/" \
-  "merged_newred_redbook_downloads_joined_content_cleanedup_processed_all_months_til040623_hot_tt_expanded_tt_train.pickle"  #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
+DATA_PATH="/home/ubuntu/cloudfs/ghost_data/newred_redbook_link_download/data_pipline/hot_tt_train/merged_newred_redbook_downloads_joined_content_cleanedup_processed_all_months_til040623_hot_tt_expanded_tt_train.pickle"  #"../dataset/instruction/guanaco_non_chat_mini_52K-utf8.json" #"./sample/merge_sample.json"
 
 #MODEL_PATH="decapoda-research/llama-7b-hf"
 MODEL_PATH="/home/ubuntu/cloudfs/saved_models/BelleGroup/BELLE-7B-2M/"

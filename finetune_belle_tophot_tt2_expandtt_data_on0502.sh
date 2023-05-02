@@ -44,6 +44,5 @@ CUDA_VISIBLE_DEVICES="0" nohup python finetune_belle_tophot_tt2_expandtt_data_on
 --run_ts $run_ts \
 --max_seq_len 800 \
 --wandb \
---use_test \
 --ignore_data_skip $from_data_beginning &
 

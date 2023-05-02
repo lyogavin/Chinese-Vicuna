@@ -386,6 +386,37 @@ class MyCallback(transformers.TrainerCallback):
             logger.info(tokenizer.decode(generation_output[0]))
 
 
+            inputs='你是小红书博主，需要根据输入的内容，按照指定的标题模版类型创作爆款小红书标题。\n小红书博主：\n需要起标题的内容：[' \
+                   '来小红书看世界杯 世界杯 城市露营]。\n符合以上内容的[氛围感叠满的]模版类型的爆款标题：['
+            logger.info(f"test input: {inputs}")
+            #tokenizer = kwargs['tokenizer']
+            model = kwargs['model']
+            input_ids = tokenizer(inputs, return_tensors="pt")['input_ids']
+            input_ids = input_ids.to('cuda')
+
+            generation_config = GenerationConfig(
+                temperature=1.2,
+                top_p=0.95,
+                top_k=3,
+                num_beams=4,
+                bos_token_id=1,
+                eos_token_id=2,
+                pad_token_id=0,
+                max_new_tokens=35,  # max_length=max_new_tokens+input_sequence
+                min_new_tokens=10,  # min_length=min_new_tokens+input_sequence
+                repetition_penalty=1.3,
+                #num_return_sequences=2,
+                #**kwargs,
+            )
+
+            generation_output = model.generate(
+                input_ids=input_ids,
+                generation_config=generation_config,
+                max_new_tokens=35,
+            )
+            #print(generation_output)
+            logger.info(tokenizer.decode(generation_output[0]))
+
         else:
             logger.info(f"model not found in kwargs, skipping")
 

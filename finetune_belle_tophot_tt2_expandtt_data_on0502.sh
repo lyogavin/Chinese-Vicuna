@@ -33,7 +33,7 @@ from_data_beginning=True # False
 #--use_test \
 #--resume_from_checkpoint $lora_checkpoint \
 
-CUDA_VISIBLE_DEVICES="0" nohup python finetune_belle_hot_title_bigger_r_add_fc_finetune_data_0427.py \
+CUDA_VISIBLE_DEVICES="0" nohup python finetune_belle_tophot_tt2_expandtt_data_on0502.py \
 --data_path $DATA_PATH \
 --output_path $OUTPUT_PATH \
 --model_path $MODEL_PATH \

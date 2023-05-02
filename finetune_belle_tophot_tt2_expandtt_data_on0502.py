@@ -172,7 +172,7 @@ tokenizer.padding_side = "left"  # Allow batched inference
 df = pd.read_pickle(DATA_PATH,
                     #usecols=['title', 'content']
                     )
-df = df[['title', 'content']]
+df = df[['title', 'content', 'tt']]
 
 #logger.info(f"model from: get_peft_model: {model}")
 

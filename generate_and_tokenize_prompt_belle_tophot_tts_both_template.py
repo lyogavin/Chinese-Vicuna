@@ -160,7 +160,7 @@ if __name__ == '__main__':
                         #usecols=['title', 'content'],
                         #nrows=10000
                         )
-    df = df[['title', 'content']][:10000]
+    df = df[['title', 'content', 'tt']][:10000]
     print(f"df types: {df.dtypes}")
     print(f"df head: {df.head()}")
 

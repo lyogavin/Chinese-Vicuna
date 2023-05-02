@@ -210,6 +210,7 @@ if __name__ == '__main__':
         res = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=120)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
+                             'tt':r['tt'],
                              'content':test_content,
                              'title':test_title})
         deres = tokenizer.decode(res['input_ids'], skip_special_tokens=True)
@@ -217,12 +218,14 @@ if __name__ == '__main__':
         res_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
+                             'tt':r['tt'],
                              'content':test_content,
                              'title':test_title})
 
         res_min_content_no_max = partial(generate_and_tokenize_prompt, tokenizer=tokenizer, max_seq_length=1000000)({
                              "data_type":"redbook_content_title",
                              "source_category":"newrank_healthcare",
+                             'tt':r['tt'],
                              'content':'我',
                              'title':test_title})
 
